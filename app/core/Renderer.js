@@ -4,10 +4,11 @@ import PIXI from 'pixi.js/bin/pixi';
 let windowWidth = 0;
 let windowHeight = 0;
 
-let baseWidth = 640;
-let baseHeight = 480;
+let baseWidth = 320;
+let baseHeight = 240;
 
 let imageRatio = baseWidth/baseHeight;
+let sizeRatio = imageRatio;
 
 let startDrawX, startDrawY, endDrawX, endDrawY = 0;
 
@@ -46,7 +47,6 @@ export default class Renderer {
 
 	updateWindowSize() {
 
-		// console.log('updating window size');
 		windowWidth = $(window).width();
 		windowHeight = $(window).height();
 
@@ -56,6 +56,7 @@ export default class Renderer {
 			endDrawY = windowHeight;
 
 			let offsetSize = baseWidth/(baseHeight/windowHeight);
+			sizeRatio = windowHeight/baseHeight;
 
 			startDrawX = (windowWidth - offsetSize)/2;
 			endDrawX = windowWidth - (windowWidth - offsetSize)/2;
@@ -66,6 +67,7 @@ export default class Renderer {
 			endDrawX = windowWidth;
 
 			let offsetSize = baseHeight/(baseWidth/windowWidth);
+			sizeRatio = windowWidth/baseWidth;
 
 			startDrawY = (windowHeight - offsetSize)/2;
 			endDrawY = windowHeight - (windowHeight - offsetSize)/2;
@@ -74,8 +76,7 @@ export default class Renderer {
 	}
 	
 	windowResized() {	
-		
-		// console.log('window resized');
+
 		this.updateWindowSize();
 		this.renderer.resize(windowWidth, windowHeight);
 		this.drawBounds();
@@ -92,6 +93,17 @@ export default class Renderer {
 	drawBounds() {
 
 		this.clearStage();
+
+		// Depth image
+		let base = new PIXI.BaseTexture(document.getElementById('testImage'));
+		let texture = new PIXI.Texture(base, new PIXI.Rectangle(0, 0, 320, 240));
+		let sprite = new PIXI.Sprite(texture);
+		sprite.alpha = 1;
+		sprite.x = startDrawX;
+		sprite.y = startDrawY;
+		sprite.scale.x = sizeRatio;
+		sprite.scale.y = sizeRatio;
+		this.stage.addChild(sprite);
 
 		let graphics = new PIXI.Graphics();
 		graphics.lineStyle(4, 0xFFFFFF, 1);
@@ -118,6 +130,7 @@ export default class Renderer {
 		for (let index in this.stage.children ) {
 			this.stage.removeChild(this.stage.children[index])
 		}
+		this.renderer.render(this.stage);
 	}
 
 
