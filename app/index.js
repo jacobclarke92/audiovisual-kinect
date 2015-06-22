@@ -2,6 +2,7 @@ import $ from 'jquery';
 import Effects from './effects/index';
 import Renderer from './core/Renderer';
 import KinectStream from './core/KinectStream';
+import Utils from './utils/Utils';
 
 console.log('████████ STARTING APP █████████');
 
@@ -34,7 +35,7 @@ let Circles1 = new Effects[effectsList[0]]();
 Circles1.params = {cool: 'guy'};
 Circles1.render();
 
-
+console.log(Utils.randRound(0, 5));
 
 
 // setTimeout(() => kinectStream.stopStream(), 1500);
