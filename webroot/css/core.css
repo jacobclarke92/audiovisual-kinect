@@ -9,6 +9,10 @@ html, body {
 	left: 0;
 	z-index: 10;
 	zoom: 0.75;
+	opacity: 0.1;
+	transition: opacity 0.5s;
+}
+#testImage:hover {
 	opacity: 0.9;
 }
 

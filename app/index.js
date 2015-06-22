@@ -18,8 +18,8 @@ kinectStream.startStream(imageStreamURL);
 let renderer = new Renderer();
 renderer.init();
 renderer.drawBounds();
-
 console.log(renderer.getWindowSize());
+renderer.startRendering();
 
 
 // Get effects list
@@ -35,4 +35,7 @@ Circles1.params = {cool: 'guy'};
 Circles1.render();
 
 
+
+
 // setTimeout(() => kinectStream.stopStream(), 1500);
+// setTimeout(() => renderer.stopRendering(), 1500);

@@ -11,6 +11,7 @@ let imageRatio = baseWidth/baseHeight;
 let sizeRatio = imageRatio;
 
 let startDrawX, startDrawY, endDrawX, endDrawY = 0;
+let stoppingRendering = false;
 
 export default class Renderer {
 
@@ -131,6 +132,20 @@ export default class Renderer {
 			this.stage.removeChild(this.stage.children[index])
 		}
 		this.renderer.render(this.stage);
+	}
+
+	renderFrame() {
+
+		this.drawBounds();
+		if(!stoppingRendering) requestAnimationFrame(() => this.renderFrame())
+	}
+
+	startRendering() {
+		this.renderFrame();
+	}
+
+	stopRendering() {
+		stoppingRendering = true;
 	}
 
 
