@@ -1,0 +1,39 @@
+{
+  "name": "audiovisual-kinect",
+  "version": "1.0.0",
+  "description": "Visualisation webapp for streamed kinect depth data",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jacobclarke92/audiovisual-kinect.git"
+  },
+  "author": "Jacob Clarke",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jacobclarke92/audiovisual-kinect/issues"
+  },
+  "homepage": "https://github.com/jacobclarke92/audiovisual-kinect",
+  "dependencies": {
+    "babel-core": "^5.6.2",
+    "babel-loader": "^5.1.4",
+    "chokidar": "^1.0.3",
+    "clear": "0.0.1",
+    "colors": "^1.1.2",
+    "glob": "^5.0.10",
+    "http-request": "^0.7.0",
+    "immutable": "^3.7.4",
+    "jquery": "^2.1.4",
+    "less": "^2.5.1",
+    "midi": "^0.9.3",
+    "node-libs-browser": "^0.5.2",
+    "pixi": "^0.3.1",
+    "pixi.js": "^3.0.6",
+    "socket.io": "^1.3.5",
+    "watch": "^0.16.0",
+    "webpack": "^1.9.11",
+    "websocket-stream": "^1.5.0"
+  }
+}
