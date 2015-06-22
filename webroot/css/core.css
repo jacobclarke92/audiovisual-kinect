@@ -1,0 +1,23 @@
+html, body {
+	margin: 0;
+	padding: 0;
+}
+
+#testImage {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 10;
+	zoom: 0.75;
+	/*opacity: 0.75;*/
+}
+
+#stage {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+#stage #renderer {
+	display: block;
+}
