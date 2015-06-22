@@ -5,7 +5,7 @@ var app = require('http');
 var httpRequest = require('http-request');
 var url = require("url");
 var BufferedNetstringStream = require('./netstring').BufferedNetstringStream;
-
+var WebSocketServer = require('websocket').server;
 var colors = require('colors/safe');
 
 
@@ -100,6 +100,7 @@ var appServer = app.createServer(function(req, res) {
 
 });
 
+
 var id = 0;
 function writeImage(image) {
 
@@ -118,3 +119,24 @@ process.stdin.pipe(new BufferedNetstringStream).on('data', writeImage);
 appServer.listen(portNum);
 
 console.log(colors.green.bold('Node server started!')); 
+
+
+
+// wsServer = new WebSocketServer({
+// 	httpServer: app
+// });
+
+// wsServer.on('request', function(request) {
+// 	var connection = request.accept(null, request.origin);
+// 	connection.on('message', function(message) {
+// 		if(message.type == 'utf8') {
+
+// 		}
+// 	});
+// 	connection.on('close', function(connection) {
+		
+// 	});
+// });
+
+
+
