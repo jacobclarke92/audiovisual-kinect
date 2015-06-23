@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import SocketIO from 'socket.io-client';
 import Effects from './effects/index';
 import Renderer from './core/Renderer';
 import KinectStream from './core/KinectStream';
@@ -37,6 +38,20 @@ Circles1.render();
 
 console.log(Utils.randRound(0, 5));
 
+console.log(SocketIO);
+
+var socket = SocketIO.connect('http://localhost:3000/');
+socket.emit('deviceActive', {
+	request: 'SET',
+	deviceName: 'Core'
+});
+
+// socket.on('news', function(data) {
+// 	console.log(data);
+// 	socket.emit('my other event', {my: 'data'});
+// });
+
 
 // setTimeout(() => kinectStream.stopStream(), 1500);
 // setTimeout(() => renderer.stopRendering(), 1500);
+

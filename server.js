@@ -12,14 +12,11 @@ var BufferedNetstringStream = require('./netstring').BufferedNetstringStream;
 var colors = require('colors/safe');
 
 
+var verbose = true;
 var portNum = 3000;
 var clients = [];
 
-var verbose = true;
-
-
 var urlRules = [
-	['.pde','text/processing'],
 	['.png','image/png'],
 	['.js','application/javascript'],
 	['.html','text/html'],
@@ -37,7 +34,19 @@ var urlRules = [
 ];
 
 
-//start doing stream data stuff
+// Init kinect stream functions
+var id = 0;
+function writeImage(image) {
+
+	var uri = 'data:image/png;base64,' + image.toString('base64');
+
+	clients.forEach(function(client) {
+		client.write('id: ' + id + '\n');
+		client.write('data: ' + uri + '\n\n');
+	});
+
+	id++;
+}
 
 function stream(req, res) {
 	res.writeHead(200, {
@@ -57,6 +66,8 @@ function stream(req, res) {
 	});
 }
 
+
+// Start Express webserver
 app.get('*', function(req, res) {
 
 	var parsedURL = url.parse(req.url, true);
@@ -96,22 +107,31 @@ app.get('*', function(req, res) {
 });
 
 
-var id = 0;
-function writeImage(image) {
-
-	var uri = 'data:image/png;base64,' + image.toString('base64');
-
-	clients.forEach(function(client) {
-		client.write('id: ' + id + '\n');
-		client.write('data: ' + uri + '\n\n');
+// Set up Socket.IO connections
+io.on('connection', function (socket) {
+	
+	socket.on('deviceActive', function (data) {
+		console.log('New socket opened for device "' + data.deviceName + '"');
 	});
 
-	id++;
-}
+	socket.on('currentEffectParameters', function (data) {
+		io.emit('currentEffectParameters', data);
+	});
 
+	socket.on('disconnect', function () {
+		io.emit('user disconnected');
+		console.log('IO Socket disconnected');
+	});
+});
+
+
+// Launch server
 process.stdin.resume();
 process.stdin.pipe(new BufferedNetstringStream).on('data', writeImage);
 http.listen(portNum);
 
 console.log(colors.green.bold('Node server started!')); 
+
+
+
 
