@@ -22,6 +22,6 @@ html, body {
 	left: 0;
 }
 
-#stage #renderer {
+#stage .pixi-canvas {
 	display: block;
 }

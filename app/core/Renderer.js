@@ -1,129 +1,42 @@
 import $ from 'jquery';
 import PIXI from 'pixi.js/bin/pixi';
+import DrawBounds from '../utils/DrawBounds';
 
-let windowWidth = 0;
-let windowHeight = 0;
-
-let baseWidth = 320;
-let baseHeight = 240;
-
-let imageRatio = baseWidth/baseHeight;
-let sizeRatio = imageRatio;
-
-let startDrawX, startDrawY, endDrawX, endDrawY = 0;
-let stoppingRendering = false;
+console.log(DrawBounds);
+let drawBounds = new DrawBounds();
 
 export default class Renderer {
 
-	constructor() {
+	constructor(domContainer, width, height) {
 		this.stage = false;
 		this.renderer = false;
-	}
-
-
-	changeScript(scriptName) {
-
+		this.width = width;
+		this.height = height;
+		this.domContainer = domContainer;
 	}
 
 	init() {
 
 		console.log('initing');
-		this.updateWindowSize();
 
-		this.renderer = PIXI.autoDetectRenderer(windowWidth, windowHeight, {
+		this.renderer = PIXI.autoDetectRenderer(this.width, this.height, {
 			antialias: true,
 			backgroundColor: 0x000000
 		});
-		this.renderer.view.id = 'renderer';
-		document.getElementById('stage').appendChild(this.renderer.view);
+		this.renderer.view.className = 'pixi-canvas';
+		this.domContainer.appendChild(this.renderer.view);
 
 		this.stage = new PIXI.Container();
-
-
-		let _this = this;
-		$(window).unbind('resize').bind('resize', () => _this.windowResized() );
-
-
+		
 	}
 
-	updateWindowSize() {
+	setSize(width, height) {
 
-		windowWidth = $(window).width();
-		windowHeight = $(window).height();
-
-		if(windowWidth/windowHeight > imageRatio) {
-			
-			startDrawY = 0;
-			endDrawY = windowHeight;
-
-			let offsetSize = baseWidth/(baseHeight/windowHeight);
-			sizeRatio = windowHeight/baseHeight;
-
-			startDrawX = (windowWidth - offsetSize)/2;
-			endDrawX = windowWidth - (windowWidth - offsetSize)/2;
-
-		}else{
-
-			startDrawX = 0;
-			endDrawX = windowWidth;
-
-			let offsetSize = baseHeight/(baseWidth/windowWidth);
-			sizeRatio = windowWidth/baseWidth;
-
-			startDrawY = (windowHeight - offsetSize)/2;
-			endDrawY = windowHeight - (windowHeight - offsetSize)/2;
-
-		}
-	}
-	
-	windowResized() {	
-
-		this.updateWindowSize();
-		this.renderer.resize(windowWidth, windowHeight);
-		this.drawBounds();
-	}
-
-
-	getWindowSize() {
-		return {
-			width: windowWidth,
-			height: windowHeight
-		}
-	}
-
-	drawBounds() {
-
-		this.clearStage();
-
-		// Depth image
-		let base = new PIXI.BaseTexture(document.getElementById('testImage'));
-		let texture = new PIXI.Texture(base, new PIXI.Rectangle(0, 0, 320, 240));
-		let sprite = new PIXI.Sprite(texture);
-		sprite.alpha = 1;
-		sprite.x = startDrawX;
-		sprite.y = startDrawY;
-		sprite.scale.x = sizeRatio;
-		sprite.scale.y = sizeRatio;
-		this.stage.addChild(sprite);
-
-		let graphics = new PIXI.Graphics();
-		graphics.lineStyle(4, 0xFFFFFF, 1);
-
-		// X
-		graphics.moveTo(0,0)
-		graphics.lineTo(windowWidth, windowHeight);
-		graphics.moveTo(windowWidth, 0);
-		graphics.lineTo(0, windowHeight);
-
-		// Bounds
-		graphics.moveTo(startDrawX, startDrawY);
-		graphics.lineTo(endDrawX, startDrawY);
-		graphics.lineTo(endDrawX, endDrawY);
-		graphics.lineTo(startDrawX, endDrawY);
-		graphics.lineTo(startDrawX, startDrawY);
-
-		this.stage.addChild(graphics);
-		this.renderer.render(this.stage);
+		this.width = width;
+		this.height = height;
+		drawBounds.setSize(width, height);
+		drawBounds.process();
+		this.renderer.resize(width, height);
 
 	}
 
@@ -135,19 +48,43 @@ export default class Renderer {
 	}
 
 	renderFrame() {
-
 		this.drawBounds();
-		if(!stoppingRendering) requestAnimationFrame(() => this.renderFrame())
+		this.renderer.render(this.stage);
 	}
 
-	startRendering() {
-		this.renderFrame();
+	drawBounds() {
+
+		this.clearStage();
+
+		// Depth image
+		let base = new PIXI.BaseTexture(document.getElementById('testImage'));
+		let texture = new PIXI.Texture(base, new PIXI.Rectangle(0, 0, 320, 240));
+		let sprite = new PIXI.Sprite(texture);
+		sprite.alpha = 1;
+		sprite.x = drawBounds.startX;
+		sprite.y = drawBounds.startY;
+		sprite.scale.x = drawBounds.sizeRatio;
+		sprite.scale.y = drawBounds.sizeRatio;
+		this.stage.addChild(sprite);
+
+		let graphics = new PIXI.Graphics();
+		graphics.lineStyle(4, 0xFFFFFF, 1);
+
+		// X
+		graphics.moveTo(0,0)
+		graphics.lineTo(drawBounds.width, drawBounds.height);
+		graphics.moveTo(drawBounds.width, 0);
+		graphics.lineTo(0, drawBounds.height);
+
+		// Bounds
+		graphics.moveTo(drawBounds.startX, drawBounds.startY);
+		graphics.lineTo(drawBounds.endX, drawBounds.startY);
+		graphics.lineTo(drawBounds.endX, drawBounds.endY);
+		graphics.lineTo(drawBounds.startX, drawBounds.endY);
+		graphics.lineTo(drawBounds.startX, drawBounds.startY);
+
+		this.stage.addChild(graphics);
+
 	}
-
-	stopRendering() {
-		stoppingRendering = true;
-	}
-
-
 
 }

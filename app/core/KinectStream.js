@@ -1,52 +1,45 @@
 
-let imageEventSource = false;
-let kinectStreamWorker = false;
-let currentKinectImage = new Image();
-let kinectStreamWorkerURL = '/app/workers/KinectStream.js';
+import KinectStreamWorker from '../workers/KinectStream';
+
+
+function createWorkerURL(func) {
+	return URL.createObjectURL(new Blob(['(', func.toString(), ')()' ], {type: 'application/javascript'}));
+}
 
 export default class KinectStream {
 
-	constructor() {
-		this.currentKinectImage = currentKinectImage;
+	constructor(url) {
+		this.url = url;
+		this.image = null;
+		this.worker = false;
 	}
 
-	startStream(imageStreamURL) {
-
+	start() {
 		console.log('starting kinect stream');
-		this.startWorker(imageStreamURL);
-	}
-
-	stopStream() {
-
-		console.log('stopping kinect stream');
-		this.stopWorker();
-	}
-
-	startWorker(imageStreamURL) {
-		if(kinectStreamWorker) this.stopWorker();
-		kinectStreamWorker = new Worker(kinectStreamWorkerURL);
-		kinectStreamWorker.addEventListener('message', this.onImageUpdate);
-		kinectStreamWorker.postMessage({
+		if(this.worker) this.stop();
+		this.worker = new Worker(createWorkerURL(KinectStreamWorker));
+		this.worker.addEventListener('message', this.onImageUpdate.bind(this));
+		this.worker.postMessage({
 			'cmd': 'start',
-			'path': imageStreamURL
+			'path': this.url
 		});
 	}
 
-	stopWorker() {
-		if(!kinectStreamWorker) return;
-		kinectStreamWorker.postMessage({'cmd': 'stop'});
-		kinectStreamWorker.terminate();
-		kinectStreamWorker = false;
+	stop() {
+		console.log('stopping kinect stream');
+		if(!this.worker) return;
+		this.worker.postMessage({'cmd': 'stop'});
+		this.worker.terminate();
+		this.worker = false;
+	}
+
+	getImage() {
+		return this.image;
 	}
 
 	onImageUpdate(event) {
-		// console.log('onImageUpdate');
-		document.getElementById('testImage').src = event.data.image;
-
-	}
-
-	test() {
-		console.log('hello world');
+		this.image = new Image();
+		this.image.src = event.data.image;
 	}
 
 

@@ -1,41 +1,44 @@
-var imageEventSource;
-var running = false;
+export default function doWork() {
 
-self.onmessage = function(e) {
+	var imageEventSource;
+	var running = false;
 
-	if(e.data.cmd == 'start') {
+	self.onmessage = function(e) {
 
-		running = true;
+		if(e.data.cmd == 'start') {
 
-		var imageStreamPath = (e.data.path) ? e.data.path : '/images';
+			running = true;
+			console.log('FROM WORKER', e);
+			var imageStreamPath = (e.data.path) ? e.data.path : '/images';
 
-		console.info('image worker initing');
-		imageEventSource = new EventSource(imageStreamPath);
-		imageEventSource.addEventListener('message', function(event) {
+			console.info('image worker initing');
+			imageEventSource = new EventSource(imageStreamPath);
+			imageEventSource.addEventListener('message', function(event) {
 
-			if(running) {
-				
-				if(event.data.substring(0,14) == 'data:image/png' ) {
-
-					self.postMessage({
-
-						'image': event.data
-
-					});
+				if(running) {
 					
-				}
-			}else{
+					if(event.data.substring(0,14) == 'data:image/png' ) {
 
-				event.target.close();
+						self.postMessage({
 
-			}			
-		});
+							'image': event.data
 
-	}else if(e.data.cmd == 'stop') {
-		console.warn('image loader stopping!');
-		running = false;
-		imageEventSource.removeEventListener('message');
-		imageEventSource = false;
+						});
+						
+					}
+				}else{
+
+					event.target.close();
+
+				}			
+			});
+
+		}else if(e.data.cmd == 'stop') {
+			console.warn('image loader stopping!');
+			running = false;
+			imageEventSource.removeEventListener('message');
+			imageEventSource = false;
+		}
+
 	}
-
-}  
+}

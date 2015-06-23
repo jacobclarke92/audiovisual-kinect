@@ -49,6 +49,7 @@ function writeImage(image) {
 }
 
 function stream(req, res) {
+	
 	res.writeHead(200, {
 		'Content-Type':  'text/event-stream',
 		'Cache-Control': 'no-cache',
@@ -109,7 +110,7 @@ app.get('*', function(req, res) {
 
 // Set up Socket.IO connections
 io.on('connection', function (socket) {
-	
+
 	socket.on('deviceActive', function (data) {
 		console.log('New socket opened for device "' + data.deviceName + '"');
 	});

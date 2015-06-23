@@ -28,6 +28,7 @@
     "immutable": "^3.7.4",
     "jquery": "^2.1.4",
     "less": "^2.5.1",
+    "lodash": "^3.9.3",
     "midi": "^0.9.3",
     "node-libs-browser": "^0.5.2",
     "pixi.js": "^3.0.6",
