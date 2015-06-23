@@ -36,9 +36,8 @@ let Circles1 = new Effects[effectsList[0]]();
 Circles1.params = {cool: 'guy'};
 Circles1.render();
 
-console.log(Utils.randRound(0, 5));
 
-console.log(SocketIO);
+// Emit Socket.IO greeting
 
 var socket = SocketIO.connect('http://localhost:3000/');
 socket.emit('deviceActive', {

@@ -1,7 +1,8 @@
 
 let imageEventSource = false;
-let closingImageEventSource = false;
+let kinectStreamWorker = false;
 let currentKinectImage = new Image();
+let kinectStreamWorkerURL = '/app/workers/KinectStream.js';
 
 export default class KinectStream {
 
@@ -12,30 +13,35 @@ export default class KinectStream {
 	startStream(imageStreamURL) {
 
 		console.log('starting kinect stream');
-		closingImageEventSource = false;
-
-		imageEventSource = new EventSource(imageStreamURL);
-		imageEventSource.addEventListener('message', function(event) {
-
-			if(closingImageEventSource) {
-				event.target.close();
-
-			}else if(event.data.substring(0,14) == 'data:image/png' ) {
-				// console.log('got image');
-				currentKinectImage.src = event.data;
-			}
-		});
-		currentKinectImage.onload = this.onImageUpdate;
+		this.startWorker(imageStreamURL);
 	}
 
 	stopStream() {
+
 		console.log('stopping kinect stream');
-		closingImageEventSource = true;
+		this.stopWorker();
+	}
+
+	startWorker(imageStreamURL) {
+		if(kinectStreamWorker) this.stopWorker();
+		kinectStreamWorker = new Worker(kinectStreamWorkerURL);
+		kinectStreamWorker.addEventListener('message', this.onImageUpdate);
+		kinectStreamWorker.postMessage({
+			'cmd': 'start',
+			'path': imageStreamURL
+		});
+	}
+
+	stopWorker() {
+		if(!kinectStreamWorker) return;
+		kinectStreamWorker.postMessage({'cmd': 'stop'});
+		kinectStreamWorker.terminate();
+		kinectStreamWorker = false;
 	}
 
 	onImageUpdate(event) {
 		// console.log('onImageUpdate');
-		document.getElementById('testImage').src = currentKinectImage.src;
+		document.getElementById('testImage').src = event.data.image;
 
 	}
 
