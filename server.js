@@ -1,11 +1,14 @@
 #!/usr/bin/env node
 
 var fs = require('fs');
-var app = require('http');
+
+var app = require('express')();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
 var httpRequest = require('http-request');
 var url = require("url");
 var BufferedNetstringStream = require('./netstring').BufferedNetstringStream;
-var WebSocketServer = require('websocket').server;
 var colors = require('colors/safe');
 
 
@@ -54,26 +57,21 @@ function stream(req, res) {
 	});
 }
 
-var appServer = app.createServer(function(req, res) {
+app.get('*', function(req, res) {
 
 	var parsedURL = url.parse(req.url, true);
 	var pathname = parsedURL.pathname;
-	// console.log(pathname);
 
 	var reqURL = __dirname + req.url;
 	if(pathname == '/') reqURL = __dirname + '/webroot/index.html';
 	
-	if (pathname == '/app/midi.json') {
-		
-		stream(req, res, 'text/event-stream');
-		if(verbose) console.log('midi stream requested');
-
-	}else if (pathname == '/images') {
+	if (pathname == '/images') {
 
 		stream(req, res, 'text/event-stream');
 		if(verbose) console.log('kinect stream requested');		
 
 	} else {
+
 		var mimeType = false;
 		for(var i=0; i< urlRules.length; i++) {
 			if (reqURL.indexOf(urlRules[i][0]) > -1) {
@@ -93,9 +91,6 @@ var appServer = app.createServer(function(req, res) {
 			});
 			res.end(data);
 		});
-		/*
-		
-		*/
 	}
 
 });
@@ -116,27 +111,7 @@ function writeImage(image) {
 
 process.stdin.resume();
 process.stdin.pipe(new BufferedNetstringStream).on('data', writeImage);
-appServer.listen(portNum);
+http.listen(portNum);
 
 console.log(colors.green.bold('Node server started!')); 
-
-
-
-// wsServer = new WebSocketServer({
-// 	httpServer: app
-// });
-
-// wsServer.on('request', function(request) {
-// 	var connection = request.accept(null, request.origin);
-// 	connection.on('message', function(message) {
-// 		if(message.type == 'utf8') {
-
-// 		}
-// 	});
-// 	connection.on('close', function(connection) {
-		
-// 	});
-// });
-
-
 
