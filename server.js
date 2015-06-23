@@ -49,7 +49,7 @@ function writeImage(image) {
 }
 
 function stream(req, res) {
-	
+
 	res.writeHead(200, {
 		'Content-Type':  'text/event-stream',
 		'Cache-Control': 'no-cache',
@@ -115,6 +115,11 @@ io.on('connection', function (socket) {
 		console.log('New socket opened for device "' + data.deviceName + '"');
 	});
 
+	socket.on('effectList', function (data) {
+		io.emit('effectList', data);
+		if(data.request == 'SET') console.log(data.effectList);
+	});
+
 	socket.on('currentEffectParameters', function (data) {
 		io.emit('currentEffectParameters', data);
 	});
@@ -123,6 +128,7 @@ io.on('connection', function (socket) {
 		io.emit('user disconnected');
 		console.log('IO Socket disconnected');
 	});
+
 });
 
 
@@ -133,6 +139,9 @@ http.listen(portNum);
 
 console.log(colors.green.bold('Node server started!')); 
 
-
+setTimeout(function() {
+	console.log('socket io sending fake get effect list request')
+	io.emit('effectList', {request: 'GET'});
+},3000);
 
 

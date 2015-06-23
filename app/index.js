@@ -1,9 +1,8 @@
 import $ from 'jquery';
-import _ from 'lodash';
 import SocketIO from 'socket.io-client';
-import Effects from './effects/index';
 import KinectStream from './core/KinectStream';
 import Renderer from './core/Renderer';
+import EffectController from './core/EffectController';
 
 console.log('████████ STARTING APP █████████');
 
@@ -25,12 +24,8 @@ renderer.init();
 
 // Get effects list
 
-const effectsList = _.keys(Effects);
-console.log(effectsList)
-
-let Circles1 = new Effects[effectsList[0]]();
-Circles1.params = {cool: 'guy'};
-Circles1.render();
+let effectController = new EffectController();
+effectController.loadEffect('Circles1');
 
 
 // Emit Socket.IO greeting
@@ -39,6 +34,17 @@ var socket = SocketIO.connect('http://localhost:3000/');
 socket.emit('deviceActive', {
 	request: 'SET',
 	deviceName: 'Core'
+});
+
+socket.on('effectList', function(data) {
+	if(data.request == 'GET') {
+		console.log('effect list requested');
+		let list = effectController.getEffectList();
+		socket.emit('effectList', {
+			request: 'SET',
+			effectList: list
+		});
+	};
 });
 
 // socket.on('news', function(data) {
