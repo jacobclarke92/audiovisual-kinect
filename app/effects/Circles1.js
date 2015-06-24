@@ -4,7 +4,7 @@
 
 export default class Circles1 {
 
-	static paramDefaults() {
+	paramDefaults() {
 		return {
 			lineThickness: {
 				label: 'Line Thickness (px)',
@@ -20,10 +20,11 @@ export default class Circles1 {
 		};
 	}
 
-	static getEffectRequirements() {
+	getEffectRequirements() {
 		return {
-			outline: true,
-			audio: true
+			outline: false,
+			audio: true,
+			kinect: true,
 		};
 	}
 

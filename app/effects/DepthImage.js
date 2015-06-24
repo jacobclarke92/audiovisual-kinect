@@ -2,13 +2,13 @@
 
 export default class DepthImage {
 
-	static paramDefaults() {
+	paramDefaults() {
 		return {
 			
 		};
 	}
 
-	static getEffectRequirements() {
+	getEffectRequirements() {
 		return {
 			outline: false,
 			audio: false,
@@ -31,9 +31,6 @@ export default class DepthImage {
 	render() {
 		
 		console.log('draw!');
-		if(this.currentKinectImage) {
-
-		}
 
 	}
 }

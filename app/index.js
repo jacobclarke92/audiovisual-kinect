@@ -4,6 +4,7 @@ import SocketIO from 'socket.io-client';
 import Immutable from 'immutable';
 // Core
 import KinectStream from './core/KinectStream';
+import AudioStream from './core/AudioStream';
 import Renderer from './core/Renderer';
 import EffectController from './core/EffectController';
 // Stores
@@ -21,6 +22,11 @@ kinectStream.start();
 let currentImage = kinectStream.getImage(); // may be null but doesn't matter
 
 
+// Init audio stream
+
+let audioStream = new AudioStream();
+
+
 // Animation controls
 
 let animating = false;
@@ -33,6 +39,7 @@ function processFrame() {
 		document.getElementById('testImage').src = currentImage.src;
 	}
 
+	audioStream.process();
 	// ~~~ process current effect code and send to renderer
 	renderer.renderFrame();
 
@@ -58,7 +65,27 @@ renderer.init();
 // Get effects list
 
 let effectController = new EffectController();
-effectController.loadEffect('Circles1');
+// effectController.loadEffect('Circles1');
+let effectRequirements = null;
+
+function loadEffect(effectName) {
+
+	effectRequirements = effectController.loadEffect(effectName);
+
+	if(effectRequirements.kinect) {
+		kinectStream.start();
+	}else {
+		kinectStream.stop();
+	}
+
+	if(effectRequirements.audio) {
+		audioStream.start();
+	}else {
+		audioStream.stop();
+	}
+
+}
+loadEffect('Circles1');
 
 
 // Emit Socket.IO greeting

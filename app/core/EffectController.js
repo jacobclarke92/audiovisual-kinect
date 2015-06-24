@@ -16,10 +16,12 @@ export default class EffectController {
 	}
 
 	loadEffect(effectName) {
+
+		if(!effectName) effectName = this.effectList[0];
 		console.log('Loading effect: ' + effectName);
 
-		let currentEffect = new Effects[effectName]();
-		console.log(currentEffect);
+		currentEffect = new Effects[effectName](); 
+		return currentEffect.getEffectRequirements();
 	}
 
 }
