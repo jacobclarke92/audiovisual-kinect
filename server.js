@@ -117,7 +117,7 @@ io.on('connection', function (socket) {
 
 	socket.on('effectList', function (data) {
 		io.emit('effectList', data);
-		if(data.request == 'SET') console.log(data.effectList);
+		if(data.request == 'SET') console.log('Effect list received!', data.effectList);
 	});
 
 	socket.on('currentEffectParameters', function (data) {

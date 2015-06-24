@@ -1,8 +1,13 @@
+// Libs
 import $ from 'jquery';
 import SocketIO from 'socket.io-client';
+import Immutable from 'immutable';
+// Core
 import KinectStream from './core/KinectStream';
 import Renderer from './core/Renderer';
 import EffectController from './core/EffectController';
+// Stores
+import * as PaletteStore from './stores/Palette.js';
 
 console.log('████████ STARTING APP █████████');
 
@@ -14,6 +19,34 @@ let kinectStream = new KinectStream(imageStreamURL);
 kinectStream.start();
 
 let currentImage = kinectStream.getImage(); // may be null but doesn't matter
+
+
+// Animation controls
+
+let animating = false;
+function processFrame() {
+
+	let newImage = kinectStream.getImage();
+	// Only update currentImage if it is in fact a new image
+	if (currentImage !== newImage) {
+		currentImage = newImage;
+		document.getElementById('testImage').src = currentImage.src;
+	}
+
+	// ~~~ process current effect code and send to renderer
+	renderer.renderFrame();
+
+	if(animating) requestAnimationFrame(() => processFrame());
+}
+
+function startRendering() {
+	animating = true;
+	processFrame();
+}
+function stopRendering() {
+	animating = false;
+}
+
 
 // Init renderer
 
@@ -47,42 +80,30 @@ socket.on('effectList', function(data) {
 	};
 });
 
-// socket.on('news', function(data) {
-// 	console.log(data);
-// 	socket.emit('my other event', {my: 'data'});
-// });
 
-
-// setTimeout(() => kinectStream.stopStream(), 1500);
-// setTimeout(() => renderer.stopRendering(), 1500);
+// Window listener
 
 $(window).bind('resize', windowResized );
-// window.addEventListener('resize', () => windowResized);
 
 function windowResized() {
 	renderer.setSize(window.innerWidth, window.innerHeight);
 }
-console.log(renderer);
-function processFrame() {
-	let newImage = kinectStream.getImage();
-	if (currentImage !== newImage) {
-		currentImage = newImage;
-		document.getElementById('testImage').src = currentImage.src;
-	}else{
 
-	}
 
-	renderer.renderFrame();
+// Palettes
 
-	// Request next frame
-	requestAnimationFrame(() => processFrame());
-}
+let currentPalette = PaletteStore.getRandomPalette();
+console.log(PaletteStore.getRandomPalette());
+console.log(PaletteStore.getRandomPalette());
 
+
+
+
+// GOOOOOOOOOO
 
 function startEverything() {
 	windowResized();
-	processFrame();	
+	startRendering();
 }
-
 
 startEverything();

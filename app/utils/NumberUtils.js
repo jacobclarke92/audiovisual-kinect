@@ -1,13 +1,19 @@
-export function rand(start = 0, end = 1) {
-	if (end) {
-		const actualRange = Math.abs(end - start);
-        return start + Math.random() * actualRange;
-	} else {
-		
+export function rand(range) {
+	let start = 0, end = range;
+	if (typeof range == 'array') {
+		start = range[0];
+		end = range[1];
 	}
+	const actualRange = Math.abs(end - start);
+    return start + Math.random() * actualRange;
 }
 
-export function randRound(start, end) {
+export function randRound(range) {
+	let start = 0, end = range;
+	if (typeof range == 'array') {
+		start = range[0];
+		end = range[1];
+	}
 	const actualRange = Math.abs(end - start);
     return start + Math.floor(Math.random()*actualRange);
 }
