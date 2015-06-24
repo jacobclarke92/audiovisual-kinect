@@ -109,4 +109,12 @@ export default class AudioStream {
 
 	}
 
+	getAmplitudeArray() {
+		return amplitudeArray;
+	}
+
+	getFrequencyArray() {
+		return frequencyArray;
+	}
+
 }
