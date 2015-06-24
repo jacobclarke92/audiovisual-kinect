@@ -1,3 +1,5 @@
+import SocketUtil from '../utils/SocketUtil';
+let socketUtil = new SocketUtil();
 
 navigator.getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
 let audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -26,6 +28,19 @@ function requestAudioStream() {
 	});
 }
 
+function stopAudioStream() {
+
+	if(streamInstance) {
+		streamInstance.stop();
+		streamInstance = null;
+	}
+
+	socketUtil.send('serviceStatus', {
+		service: 'audio',
+		active: false
+	});
+}
+
 function configureAudioStream(stream) {
 	
 	console.log('Mic access granted');
@@ -43,6 +58,11 @@ function configureAudioStream(stream) {
 	sourceNode.connect(analyserNode);
 	analyserNode.connect(javascriptNode);
 	javascriptNode.connect(audioContext.destination);
+
+	socketUtil.send('serviceStatus', {
+		service: 'audio',
+		active: true
+	});
 
 }
 
@@ -73,10 +93,7 @@ export default class AudioStream {
 	stop() {
 		audioStreamEnabled = false;
 		if(!audioStreamRequestGranted) return;
-		if(streamInstance) {
-			streamInstance.stop();
-			streamInstance = null;
-		}
+		stopAudioStream();
 	}
 
 	process() {

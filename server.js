@@ -117,7 +117,12 @@ io.on('connection', function (socket) {
 
 	socket.on('effectList', function (data) {
 		io.emit('effectList', data);
-		if(data.request == 'SET') console.log('Effect list received!', data.effectList);
+		if(data.request == 'SET') console.log('Effect list received!', data.data.effectList);
+	});
+
+	socket.on('serviceStatus', function (data) {
+		io.emit('serviceStatus', data);
+		if(data.request == 'SET') console.log('Service status sent from ' + data.deviceName + ' for ' + data.data.service, data.data);
 	});
 
 	socket.on('currentEffectParameters', function (data) {

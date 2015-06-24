@@ -1,12 +1,12 @@
 // Libs
 import $ from 'jquery';
-import SocketIO from 'socket.io-client';
 import Immutable from 'immutable';
 // Core
 import KinectStream from './core/KinectStream';
 import AudioStream from './core/AudioStream';
 import Renderer from './core/Renderer';
 import EffectController from './core/EffectController';
+import SocketUtil from './utils/SocketUtil';
 // Stores
 import * as PaletteStore from './stores/Palette.js';
 
@@ -93,23 +93,17 @@ loadEffect('Circles1');
 
 // Emit Socket.IO greeting
 
-var socket = SocketIO.connect('http://localhost:3000/');
-socket.emit('deviceActive', {
-	request: 'SET',
-	deviceName: 'Core'
-});
+let socketUtil = new SocketUtil();
+let effectList = effectController.getEffectList();
 
-socket.on('effectList', function(data) {
-	if(data.request == 'GET') {
-		console.log('effect list requested');
-		let list = effectController.getEffectList();
-		socket.emit('effectList', {
-			request: 'SET',
-			effectList: list
-		});
-	};
+socketUtil.send('deviceActive', null);
+socketUtil.listenAndReturn('effectList', {effectList: effectList});
+/*
+socketUtil.listenAndReturn('effectList', function() {
+	let list = effectController.getEffectList()
+	return {effectList: list};
 });
-
+*/
 
 // Window listener
 
