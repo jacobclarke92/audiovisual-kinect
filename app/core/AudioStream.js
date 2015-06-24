@@ -35,10 +35,7 @@ function stopAudioStream() {
 		streamInstance = null;
 	}
 
-	socketUtil.send('serviceStatus', {
-		service: 'audio',
-		active: false
-	});
+	socketUtil.send('serviceStatus', { service: 'audio', active: false });
 }
 
 function configureAudioStream(stream) {
@@ -59,10 +56,7 @@ function configureAudioStream(stream) {
 	analyserNode.connect(javascriptNode);
 	javascriptNode.connect(audioContext.destination);
 
-	socketUtil.send('serviceStatus', {
-		service: 'audio',
-		active: true
-	});
+	socketUtil.send('serviceStatus', { service: 'audio', active: true });
 
 }
 
