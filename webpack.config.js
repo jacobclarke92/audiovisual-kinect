@@ -1,10 +1,13 @@
 var path = require('path');
 
 module.exports = {
-  entry: ['./app/index.js'],
+  entry: {
+    core: './app/index.js',
+    ui: './app/ui/index.js'
+  },
   output: {
     path: './webroot/js',
-    filename: 'scripts.js'       
+    filename: '[name].js'       
   },
   resolve: {
     extensions: [ '', '.js' ]

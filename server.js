@@ -76,6 +76,7 @@ app.get('*', function(req, res) {
 
 	var reqURL = __dirname + req.url;
 	if(pathname == '/') reqURL = __dirname + '/webroot/index.html';
+	else if(pathname == '/ui') reqURL = __dirname + '/webroot/ui.html';
 	
 	if (pathname == '/images') {
 
