@@ -5,7 +5,7 @@ const IMAGE_RATIO = KINECT_WIDTH/KINECT_HEIGHT;
 
 export default class DrawBounds {
 
-	constructor(width, height) {
+	constructor() {
 		this.bounds = {};
 	}
 
