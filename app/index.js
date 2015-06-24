@@ -39,7 +39,10 @@ function processFrame() {
 		document.getElementById('testImage').src = currentImage.src;
 	}
 
-	audioStream.process();
+	if(effectRequirements.audio) {
+		// console.log(audioStream.getVolume());
+		audioStream.process();
+	}
 	// ~~~ process current effect code and send to renderer
 	renderer.renderFrame();
 

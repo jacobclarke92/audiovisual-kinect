@@ -38,7 +38,7 @@ function configureAudioStream(stream) {
 	analyserNode.smoothingTimeConstant = smoothingTimeConstant;
 
 	javascriptNode = audioContext.createScriptProcessor(fftSize, 1, 1);
-	javascriptNode.addEventListener('onaudioprocess', updateAudioStreamData);
+	javascriptNode.onaudioprocess = () => updateAudioStreamData();
 
 	sourceNode.connect(analyserNode);
 	analyserNode.connect(javascriptNode);
@@ -84,6 +84,17 @@ export default class AudioStream {
 		if(!audioStreamEnabled || !audioStreamRequestGranted) return;
 
 
+
+	}
+
+	getVolume() {
+
+		if(!audioStreamEnabled || !audioStreamRequestGranted) return 0;
+		let volume = 0;
+		for(let index in amplitudeArray) {
+			volume += amplitudeArray[index] - 128;
+		}
+		return Math.abs(Math.round(volume));
 
 	}
 
