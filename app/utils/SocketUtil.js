@@ -23,7 +23,7 @@ export default class SocketUtil {
 	listen(messageName, callback) {
 		socket.on(messageName, function(data) {
 			if(data.request == 'SET') {
-				console.log('Intercepted SET broadcast for '+messageName);
+				// console.log('Intercepted SET broadcast for '+messageName);
 				callback(data);
 			}
 		});
