@@ -126,8 +126,12 @@ io.on('connection', function (socket) {
 		if(data.request == 'SET') console.log('Service status sent from ' + data.deviceName + ' for ' + data.data.service, data.data);
 	});
 
-	socket.on('currentEffectParameters', function (data) {
+	socket.on('currentEffectParams', function (data) {
 		io.emit('currentEffectParameters', data);
+	});
+
+	socket.on('effectParam', function(data) {
+		io.emit('effectParam', data);
 	});
 
 	socket.on('disconnect', function () {
