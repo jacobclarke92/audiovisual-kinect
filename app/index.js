@@ -75,8 +75,8 @@ let currentEffectRequirements = null;
 
 function loadEffect(effectName) {
 
-	currentEffect = EffectStore.getEffect('Circles1');
-	currentEffectRequirements = currentEffect.getEffectRequirements()
+	currentEffect = EffectStore.getEffect(effectName);
+	currentEffectRequirements = currentEffect.getEffectRequirements();
 
 	if(currentEffectRequirements.kinect) {
 		kinectStream.start();
@@ -91,8 +91,11 @@ function loadEffect(effectName) {
 	}
 
 }
-loadEffect('Circles1');
+let currentEffectName = 'Circles1';
+loadEffect(currentEffectName);
 
+console.log(EffectStore.getEffectParam(currentEffectName, 'lineThickness').toJS());
+console.log(EffectStore.getEffectParamValue(currentEffectName, 'lineThickness'));
 
 // Emit Socket.IO greeting
 
