@@ -6,11 +6,11 @@ import Dispatcher from './core/Dispatcher';
 import KinectStream from './core/KinectStream';
 import AudioStream from './core/AudioStream';
 import Renderer from './core/Renderer';
-import EffectController from './core/EffectController';
 //Utils
 import SocketUtil from './utils/SocketUtil';
 // Stores
 import * as PaletteStore from './stores/Palette.js';
+import * as EffectStore from './stores/Effects';
 
 console.log('████████ STARTING APP █████████');
 
@@ -69,25 +69,28 @@ renderer.init();
 
 // Get effects list
 
-let effectController = new EffectController();
-// effectController.loadEffect('Circles1');
+let currentEffect = null;
 let effectRequirements = null;
 
 function loadEffect(effectName) {
 
-	effectRequirements = effectController.loadEffect(effectName);
+	currentEffect = EffectStore.getEffect('Circles1');
+	console.log('curent effect', currentEffect);
+	console.log(currentEffect.effectRequirements);
 
-	if(effectRequirements.kinect) {
-		kinectStream.start();
-	}else {
-		kinectStream.stop();
-	}
+	// effectRequirements = effectController.loadEffect(effectName);
 
-	if(effectRequirements.audio) {
-		audioStream.start();
-	}else {
-		audioStream.stop();
-	}
+	// if(effectRequirements.kinect) {
+	// 	kinectStream.start();
+	// }else {
+	// 	kinectStream.stop();
+	// }
+
+	// if(effectRequirements.audio) {
+	// 	audioStream.start();
+	// }else {
+	// 	audioStream.stop();
+	// }
 
 }
 loadEffect('Circles1');
@@ -96,7 +99,7 @@ loadEffect('Circles1');
 // Emit Socket.IO greeting
 
 let socketUtil = new SocketUtil();
-let effectList = effectController.getEffectList();
+let effectList = EffectStore.getEffectList();
 
 socketUtil.send('deviceActive', null);
 socketUtil.listenAndReturn('effectList', {effectList: effectList});
