@@ -41,7 +41,7 @@ function processFrame() {
 		document.getElementById('testImage').src = currentImage.src;
 	}
 
-	if(effectRequirements.audio) {
+	if(currentEffectRequirements&& currentEffectRequirements.audio) {
 		// console.log(audioStream.getVolume());
 		audioStream.process();
 	}
@@ -70,27 +70,24 @@ renderer.init();
 // Get effects list
 
 let currentEffect = null;
-let effectRequirements = null;
+let currentEffectRequirements = null;
 
 function loadEffect(effectName) {
 
 	currentEffect = EffectStore.getEffect('Circles1');
-	console.log('curent effect', currentEffect);
-	console.log(currentEffect.effectRequirements);
+	currentEffectRequirements = currentEffect.getEffectRequirements()
 
-	// effectRequirements = effectController.loadEffect(effectName);
+	if(currentEffectRequirements.kinect) {
+		kinectStream.start();
+	}else {
+		kinectStream.stop();
+	}
 
-	// if(effectRequirements.kinect) {
-	// 	kinectStream.start();
-	// }else {
-	// 	kinectStream.stop();
-	// }
-
-	// if(effectRequirements.audio) {
-	// 	audioStream.start();
-	// }else {
-	// 	audioStream.stop();
-	// }
+	if(currentEffectRequirements.audio) {
+		audioStream.start();
+	}else {
+		audioStream.stop();
+	}
 
 }
 loadEffect('Circles1');
@@ -123,8 +120,8 @@ function windowResized() {
 // Palettes
 
 let currentPalette = PaletteStore.getRandomPalette();
-console.log(PaletteStore.getRandomPalette());
-console.log(PaletteStore.getRandomPalette());
+console.log(PaletteStore.getRandomPalette().toJS());
+console.log(PaletteStore.getRandomPalette().toJS());
 
 
 

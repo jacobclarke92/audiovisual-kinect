@@ -1,14 +1,15 @@
 import _ from 'lodash';
 import Immutable from 'immutable';
-
 import Effects from '../effects/index';
 
 
 let effectList = _.keys(Effects);
 let effects = Immutable.Map();
+let currentEffect = null;
 
 for(let effectName of effectList) {
-	effects = effects.set(effectName, new Effects[effectName]());
+	currentEffect = new Effects[effectName]();
+	effects = effects.set(effectName, currentEffect);
 }
 
 export function getEffectList() {
