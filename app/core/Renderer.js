@@ -2,7 +2,6 @@ import $ from 'jquery';
 import PIXI from 'pixi.js/bin/pixi';
 import DrawBounds from '../utils/DrawBounds';
 
-console.log(DrawBounds);
 let drawBounds = new DrawBounds();
 
 export default class Renderer {

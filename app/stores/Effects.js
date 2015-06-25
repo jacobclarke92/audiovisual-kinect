@@ -5,15 +5,11 @@ import Effects from '../effects/index';
 
 
 let effectList = _.keys(Effects);
-console.log(effectList);
 let effects = Immutable.Map();
 
 for(let effectName of effectList) {
-	console.log(effectName, Effects[effectName]);
 	effects = effects.set(effectName, new Effects[effectName]());
 }
-
-console.log(effects);
 
 export function getEffectList() {
 	return effectList;
