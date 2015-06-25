@@ -1,5 +1,7 @@
 import _ from 'lodash';
 import Immutable from 'immutable';
+import AppDispatcher from '../AppDispatcher';
+import ActionTypes from '../constants/ActionTypes';
 import Effects from '../effects/index';
 
 
@@ -11,6 +13,12 @@ for(let effectName of effectList) {
 	currentEffect = new Effects[effectName]();
 	effects = effects.set(effectName, currentEffect);
 }
+
+AppDispatcher.register(function(payload) {
+	if(payload.actionType === ActionTypes.UPDATE_EFFECT_PARAM) {
+		console.log('effect store intercepted param update', payload);
+	}
+});
 
 export function getEffectList() {
 	return effectList;

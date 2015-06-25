@@ -2,10 +2,11 @@
 import $ from 'jquery';
 import Immutable from 'immutable';
 // Core
-import Dispatcher from './core/Dispatcher';
+import AppDispatcher from './AppDispatcher';
 import KinectStream from './core/KinectStream';
 import AudioStream from './core/AudioStream';
 import Renderer from './core/Renderer';
+import SocketListener from './core/SocketListener';
 //Utils
 import SocketUtil from './utils/SocketUtil';
 // Stores
@@ -96,17 +97,10 @@ loadEffect('Circles1');
 // Emit Socket.IO greeting
 
 let socketUtil = new SocketUtil();
-let effectList = EffectStore.getEffectList();
-
 socketUtil.send('deviceActive', null);
-socketUtil.listenAndReturn('effectList', {effectList: effectList});
-socketUtil.listen('effectParam', effectParamUpdated);
 
-function effectParamUpdated(data) {
-	console.log('Effect param update received', data);
-	// ~~~ update stores
-	effectController.updateEffectParam(data);
-}
+let effectList = EffectStore.getEffectList();
+socketUtil.listenAndReturn('effectList', {effectList: effectList});
 
 // Window listener
 

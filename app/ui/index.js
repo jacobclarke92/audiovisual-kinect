@@ -1,5 +1,5 @@
 import SocketUtil from '../utils/SocketUtil';
-import Dispatcher from '../core/Dispatcher';
+import AppDispatcher from '../AppDispatcher';
 
 let socketUtil = new SocketUtil('UI');
 socketUtil.send('deviceActive', null);
