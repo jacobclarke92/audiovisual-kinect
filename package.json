@@ -25,6 +25,7 @@
     "express": "^4.13.0",
     "flux": "^2.0.3",
     "glob": "^5.0.10",
+    "hexrgb": "0.0.2",
     "http-request": "^0.7.0",
     "immutable": "^3.7.4",
     "jquery": "^2.1.4",
