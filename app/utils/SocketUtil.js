@@ -22,8 +22,8 @@ export default class SocketUtil {
 
 	listen(messageName, callback) {
 		socket.on(messageName, function(data) {
-			if(data.request == 'GET') {
-				console.log('Intercepted GET request for '+messageName);
+			if(data.request == 'SET') {
+				console.log('Intercepted SET broadcast for '+messageName);
 				callback(data);
 			}
 		});

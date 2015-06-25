@@ -2,10 +2,12 @@
 import $ from 'jquery';
 import Immutable from 'immutable';
 // Core
+import Dispatcher from './core/Dispatcher';
 import KinectStream from './core/KinectStream';
 import AudioStream from './core/AudioStream';
 import Renderer from './core/Renderer';
 import EffectController from './core/EffectController';
+//Utils
 import SocketUtil from './utils/SocketUtil';
 // Stores
 import * as PaletteStore from './stores/Palette.js';
@@ -98,12 +100,13 @@ let effectList = effectController.getEffectList();
 
 socketUtil.send('deviceActive', null);
 socketUtil.listenAndReturn('effectList', {effectList: effectList});
-/*
-socketUtil.listenAndReturn('effectList', function() {
-	let list = effectController.getEffectList()
-	return {effectList: list};
-});
-*/
+socketUtil.listen('effectParam', effectParamUpdated);
+
+function effectParamUpdated(data) {
+	console.log('Effect param update received', data);
+	// ~~~ update stores
+	effectController.updateEffectParam(data);
+}
 
 // Window listener
 
