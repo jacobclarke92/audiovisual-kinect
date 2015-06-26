@@ -1,6 +1,7 @@
 // Libs
 import $ from 'jquery';
 import Immutable from 'immutable';
+import PIXI from 'pixi.js/bin/pixi';
 // Core
 import AppDispatcher from './AppDispatcher';
 import KinectStream from './core/KinectStream';
@@ -9,6 +10,7 @@ import Renderer from './core/Renderer';
 import SocketListener from './core/SocketListener';
 //Utils
 import SocketUtil from './utils/SocketUtil';
+import * as PixelUtil from './utils/PixelUtil';
 // Stores
 import * as PaletteStore from './stores/Palette.js';
 import * as EffectStore from './stores/Effects';
@@ -39,6 +41,7 @@ function processFrame() {
 	// Only update currentImage if it is in fact a new image
 	if (currentImage !== newImage) {
 		currentImage = newImage;
+		PixelUtil.updatePixels(currentImage);
 		document.getElementById('testImage').src = currentImage.src;
 	}
 
@@ -46,8 +49,10 @@ function processFrame() {
 		// console.log(audioStream.getVolume());
 		audioStream.process();
 	}
-	// ~~~ process current effect code and send to renderer
-	renderer.renderFrame();
+	
+	// Process current effect code and send to renderer
+	currentEffect.render();
+	renderer.renderFrame(currentEffect.stage);
 
 	if(animating) requestAnimationFrame(() => processFrame());
 }
@@ -75,8 +80,13 @@ let currentEffectRequirements = null;
 
 function loadEffect(effectName) {
 
+	if(currentEffect) currentEffect.didUnmount();
+
 	currentEffect = EffectStore.getEffect(effectName);
 	currentEffectRequirements = currentEffect.getEffectRequirements();
+
+	currentEffect.stage = new PIXI.Container();
+	currentEffect.didMount();
 
 	if(currentEffectRequirements.kinect) {
 		kinectStream.start();

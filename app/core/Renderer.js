@@ -24,8 +24,6 @@ export default class Renderer {
 		});
 		this.renderer.view.className = 'pixi-canvas';
 		this.domContainer.appendChild(this.renderer.view);
-
-		this.stage = new PIXI.Container();
 		
 	}
 
@@ -39,21 +37,11 @@ export default class Renderer {
 
 	}
 
-	clearStage() {
-		for (let index in this.stage.children ) {
-			this.stage.removeChild(this.stage.children[index])
-		}
-		this.renderer.render(this.stage);
-	}
-
-	renderFrame() {
-		this.drawBounds();
-		this.renderer.render(this.stage);
+	renderFrame(pixiContainer) {
+		this.renderer.render(pixiContainer);
 	}
 
 	drawBounds() {
-
-		this.clearStage();
 
 		// Depth image
 		let base = new PIXI.BaseTexture(document.getElementById('testImage'));

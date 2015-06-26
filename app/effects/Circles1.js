@@ -1,6 +1,7 @@
-//import Effect from './Effect';
-//import PaletteStore from '../stores/PaletteStore';
-//import '/app/core/EffectParams';
+import PIXI from 'pixi.js/bin/pixi';
+import * as EffectUtil from '../utils/EffectUtil';
+import * as PixelUtil from '../utils/PixelUtil';
+import * as NumberUtils from '../utils/NumberUtils';
 
 export default class Circles1 {
 
@@ -28,30 +29,28 @@ export default class Circles1 {
 		};
 	}
 
-	onLoad() {
-
+	didMount() {
+		// this.frame = new PIXI.Graphics();
+		// this.stage.addChild(this.frame)
 	}
 
-	onUnload() {
-
-	}
-
-	init() {
+	didUnmount() {
 
 	}
 
 	render() {
-		// this.graphics.addChild();
-		console.log('draw!');
-		console.log(this.params);
-		// console.log(this.params.lineThickness);
-		/*
-		const { lineThickness, anotherParam } = this.params;
-		//this.palette
-		//this.audio.volume;
 
-		
-		var colour = PaletteStore.getRandomColour();
-		var colourChanged = colour.set('name', 'Something else');*/
+		this.stage = EffectUtil.fadeFrames(this.stage, 0.1);
+		this.frame = new PIXI.Graphics();
+
+		this.frame.lineStyle(2, 0xFFFFFF, 1);
+		this.frame.moveTo(NumberUtils.randRound(640), NumberUtils.randRound(480));
+		this.frame.lineTo(NumberUtils.randRound(640), NumberUtils.randRound(480));
+
+		this.stage.addChild(this.frame);
+
+		// console.log(PixelUtil.getPixelValue(160, 120));
+
 	}
+
 }
