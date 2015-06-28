@@ -12,7 +12,7 @@ import SocketListener from './core/SocketListener';
 import SocketUtil from './utils/SocketUtil';
 import * as PixelUtil from './utils/PixelUtil';
 // Stores
-import * as PaletteStore from './stores/Palette.js';
+import * as PaletteStore from './stores/Palettes.js';
 import * as EffectStore from './stores/Effects';
 
 console.log('████████ STARTING APP █████████');
@@ -126,9 +126,9 @@ function windowResized() {
 
 // Palettes
 
-let currentPalette = PaletteStore.getRandomPalette();
-console.log(PaletteStore.getRandomPalette().toJS());
-console.log(PaletteStore.getRandomPalette().toJS());
+PaletteStore.setCurrentPaletteToRandom();
+console.log('Current palette = ', PaletteStore.getCurrentPalette().toJS());
+console.log('Random color = ', PaletteStore.getRandomColor() );
 
 
 
