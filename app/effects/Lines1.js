@@ -39,7 +39,7 @@ export default class Circles1 {
 	render() {
 
 		this.stage = EffectUtil.fadeFrames(this.stage, 0.05);
-		// this.stage = EffectUtil.clearStage(this.stage);
+		this.frame = EffectUtil.newSizedFrame();
 
 		for(let i = 0; i < 5; i ++) {
 
@@ -48,13 +48,9 @@ export default class Circles1 {
 
 			if(randomPoint1 && randomPoint2) {
 
-				this.frame = EffectUtil.newSizedFrame();
-
-				this.frame.lineStyle(2, PaletteStore.getRandomColor(), 1);
+				this.frame.lineStyle(1, PaletteStore.getRandomColor(), 1);
 				this.frame.moveTo(randomPoint1.x, randomPoint1.y);
 				this.frame.lineTo(randomPoint2.x, randomPoint2.y);
-
-				this.stage.addChild(this.frame);
 
 			}else{
 
@@ -63,5 +59,7 @@ export default class Circles1 {
 			}
 
 		}
+
+		this.stage.addChild(this.frame);
 	}
 }
