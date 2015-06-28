@@ -1,8 +1,9 @@
-import Lines1 from './Lines1';
 import DepthImage from './DepthImage';
-//import Circles2 from './Circles2';
+import Lines1 from './Lines1';
+import Circles1 from './Circles1';
 
 module.exports = {
+	DepthImage,
 	Lines1,
-	DepthImage
+	Circles1,
 };

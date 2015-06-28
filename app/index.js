@@ -101,7 +101,7 @@ function loadEffect(effectName) {
 	}
 
 }
-let currentEffectName = 'Lines1';
+let currentEffectName = 'Circles1';
 loadEffect(currentEffectName);
 
 console.log(EffectStore.getEffectParam(currentEffectName, 'lineThickness').toJS());

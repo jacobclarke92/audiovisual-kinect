@@ -48,4 +48,7 @@ export function randomPointInCircle(radius) {
 	const a = Math.random()*Math.PI*2;
 	return new Point( Math.cos(a)*r, Math.sin(a)*r );
 }
-	
+
+export function getMidPoint(point1, point2) {
+	return new Point((point1.x + point2.x)/2, (point1.y + point2.y)/2);
+}
