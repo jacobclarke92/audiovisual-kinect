@@ -1,4 +1,3 @@
-import PIXI from 'pixi.js/bin/pixi';
 import * as EffectUtil from '../utils/EffectUtil';
 import * as PixelUtil from '../utils/PixelUtil';
 import * as PaletteStore from '../stores/Palettes.js';
@@ -39,17 +38,17 @@ export default class Circles1 {
 
 	render() {
 
-		this.stage = EffectUtil.fadeFrames(this.stage, 1);
+		this.stage = EffectUtil.fadeFrames(this.stage, 0.05);
 		// this.stage = EffectUtil.clearStage(this.stage);
 
-		for(let i = 0; i < 20; i ++) {
+		for(let i = 0; i < 5; i ++) {
 
 			const randomPoint1 = PixelUtil.getRandomPointInFocus();
 			const randomPoint2 = PixelUtil.getRandomPointInFocusNearby(randomPoint1, 50);
 
 			if(randomPoint1 && randomPoint2) {
 
-				this.frame = new PIXI.Graphics();
+				this.frame = EffectUtil.newSizedFrame();
 
 				this.frame.lineStyle(2, PaletteStore.getRandomColor(), 1);
 				this.frame.moveTo(randomPoint1.x, randomPoint1.y);
