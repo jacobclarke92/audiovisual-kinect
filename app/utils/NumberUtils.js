@@ -3,7 +3,7 @@ import Dimensions from '../constants/Dimensions';
 
 export function rand(range) {
 	let start = 0, end = range;
-	if (typeof range == 'array') {
+	if (typeof range == 'object') {
 		start = range[0];
 		end = range[1];
 	}
@@ -13,7 +13,7 @@ export function rand(range) {
 
 export function randRound(range) {
 	let start = 0, end = range;
-	if (typeof range == 'array') {
+	if (typeof range == 'object') {
 		start = range[0];
 		end = range[1];
 	}
