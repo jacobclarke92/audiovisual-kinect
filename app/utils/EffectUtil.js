@@ -21,5 +21,7 @@ export function newSizedFrame() {
 	let frame = new PIXI.Graphics();
 	const bounds = DrawBounds.getBounds();
 	frame.scale.x = frame.scale.y = bounds.scalePercent;
+	frame.x = bounds.startX;
+	frame.y = bounds.startY;
 	return frame;
 }
