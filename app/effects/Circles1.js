@@ -1,7 +1,6 @@
 import PIXI from 'pixi.js/bin/pixi';
 import * as EffectUtil from '../utils/EffectUtil';
 import * as PixelUtil from '../utils/PixelUtil';
-import * as NumberUtils from '../utils/NumberUtils';
 
 export default class Circles1 {
 
@@ -30,8 +29,7 @@ export default class Circles1 {
 	}
 
 	didMount() {
-		// this.frame = new PIXI.Graphics();
-		// this.stage.addChild(this.frame)
+		
 	}
 
 	didUnmount() {
@@ -41,15 +39,25 @@ export default class Circles1 {
 	render() {
 
 		this.stage = EffectUtil.fadeFrames(this.stage, 0.1);
-		this.frame = new PIXI.Graphics();
 
-		this.frame.lineStyle(2, 0xFFFFFF, 1);
-		this.frame.moveTo(NumberUtils.randRound(640), NumberUtils.randRound(480));
-		this.frame.lineTo(NumberUtils.randRound(640), NumberUtils.randRound(480));
+		const randomPoint1 = PixelUtil.getRandomPointInFocus();
+		const randomPoint2 = PixelUtil.getRandomPointInFocusNearby(randomPoint1, 50);
 
-		this.stage.addChild(this.frame);
+		if(randomPoint1 && randomPoint2) {
 
-		// console.log(PixelUtil.getPixelValue(160, 120));
+			this.frame = new PIXI.Graphics();
+
+			this.frame.lineStyle(2, 0xFFFFFF, 1);
+			this.frame.moveTo(randomPoint1.x, randomPoint1.y);
+			this.frame.lineTo(randomPoint2.x, randomPoint2.y);
+
+			this.stage.addChild(this.frame);
+
+		}else{
+
+			console.log('skipping draw -- 1 or more skipped randomPoint');
+
+		}
 
 	}
 
