@@ -1,6 +1,7 @@
 import PIXI from 'pixi.js/bin/pixi';
 import * as EffectUtil from '../utils/EffectUtil';
 import * as PixelUtil from '../utils/PixelUtil';
+import * as PaletteStore from '../stores/Palettes.js';
 
 export default class Circles1 {
 
@@ -47,7 +48,7 @@ export default class Circles1 {
 
 			this.frame = new PIXI.Graphics();
 
-			this.frame.lineStyle(2, 0xFFFFFF, 1);
+			this.frame.lineStyle(2, PaletteStore.getRandomColor(), 1);
 			this.frame.moveTo(randomPoint1.x, randomPoint1.y);
 			this.frame.lineTo(randomPoint2.x, randomPoint2.y);
 

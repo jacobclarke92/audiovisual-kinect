@@ -9,7 +9,8 @@ function addPalette(paletteName, hexList) {
 	let colors = [];
 	for(let hex of hexList) {
 		let rgb = HexRGB.hex2rgb(hex);
-		colors.push( {hex, rgb} );
+		let raw = parseInt(hex.substring(1), 16);
+		colors.push( {hex, rgb, raw} );
 	}
 	palettes = palettes.push(Immutable.fromJS({
 		name: paletteName,
@@ -47,7 +48,8 @@ export function setCurrentPaletteToRandom() {
 	currentPalette = palettes.get( NumberUtils.randRound(palettes.size) );
 }
 
-export function getRandomColor() {
+export function getRandomColor(type) {
+	if(!type) type = 'raw';
 	if(!currentPalette) setCurrentPaletteToRandom();
-	return currentPalette.getIn( ['colors', NumberUtils.randRound(4), 'hex' ] );
+	return currentPalette.getIn( ['colors', NumberUtils.randRound(4), type ] );
 }
