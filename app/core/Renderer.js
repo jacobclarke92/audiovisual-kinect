@@ -1,8 +1,5 @@
 import $ from 'jquery';
 import PIXI from 'pixi.js/bin/pixi';
-import DrawBounds from '../utils/DrawBounds';
-
-let drawBounds = new DrawBounds();
 
 export default class Renderer {
 
@@ -31,8 +28,6 @@ export default class Renderer {
 
 		this.width = width;
 		this.height = height;
-		drawBounds.setSize(width, height);
-		drawBounds.process();
 		this.renderer.resize(width, height);
 
 	}

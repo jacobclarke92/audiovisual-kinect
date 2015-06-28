@@ -10,6 +10,7 @@ import Renderer from './core/Renderer';
 import SocketListener from './core/SocketListener';
 //Utils
 import SocketUtil from './utils/SocketUtil';
+import * as DrawBounds from './utils/DrawBounds';
 import * as PixelUtil from './utils/PixelUtil';
 // Stores
 import * as EffectStore from './stores/Effects';
@@ -120,6 +121,7 @@ $(window).bind('resize', windowResized );
 
 function windowResized() {
 	renderer.setSize(window.innerWidth, window.innerHeight);
+	DrawBounds.setWindowSize(window.innerWidth, window.innerHeight);
 }
 
 

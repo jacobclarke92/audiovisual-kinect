@@ -1,48 +1,52 @@
+import Dimensions from '../constants/Dimensions';
 
-const KINECT_WIDTH = 320;
-const KINECT_HEIGHT = 240;
-const IMAGE_RATIO = KINECT_WIDTH/KINECT_HEIGHT;
+let windowWidth = window.innerWidth;
+let windowHeight = window.innerHeight;
 
-export default class DrawBounds {
+let scalePercent = null,
+	startX = 0,
+	startY = 0,
+	endX = Dimensions.KINECT_WIDTH,
+	endY = Dimensions.KINECT_HEIGHT
 
-	constructor() {
-		this.bounds = {};
+export function getBounds() {
+	return {
+		scalePercent,
+		startX,
+		startY,
+		endX,
+		endY,
 	}
+}
 
-	setSize(width, height) {
-		this.width = width;
-		this.height = height;
-		this.startX = 0;
-		this.startY = 0;
-		this.endX = width;
-		this.endY = height;
-	}
+export function setWindowSize(width, height) {
+	windowWidth = width;
+	windowHeight = height;
+	process();
+}
 
-	process() {
-
-		if(this.width/this.height > IMAGE_RATIO) {
+function process() {
+	if(windowWidth/windowHeight > Dimensions.KINECT_RATIO) {
 			
-			this.startY = 0;
-			this.endY = this.height;
+		startY = 0;
+		endY = windowHeight;
 
-			let offsetSize = KINECT_WIDTH/(KINECT_HEIGHT/this.height);
-			this.sizeRatio = this.height/KINECT_HEIGHT;
+		let offsetSize = Dimensions.KINECT_WIDTH/(Dimensions.KINECT_HEIGHT/windowHeight);
+		scalePercent = windowHeight/Dimensions.KINECT_HEIGHT;
 
-			this.startX = (this.width - offsetSize)/2;
-			this.endX = this.width - (this.width - offsetSize)/2;
+		startX = (windowWidth - offsetSize)/2;
+		endX = windowWidth - (windowWidth - offsetSize)/2;
 
-		}else{
+	}else{
 
-			this.startX = 0;
-			this.endX = this.width;
+		startX = 0;
+		endX = windowWidth;
 
-			let offsetSize = KINECT_HEIGHT/(KINECT_WIDTH/this.width);
-			this.sizeRatio = this.width/KINECT_WIDTH;
+		let offsetSize = Dimensions.KINECT_HEIGHT/(Dimensions.KINECT_WIDTH/windowWidth);
+		scalePercent = windowWidth/Dimensions.KINECT_WIDTH;
 
-			this.startY = (this.height - offsetSize)/2;
-			this.endY = this.height - (this.height - offsetSize)/2;
+		startY = (windowHeight - offsetSize)/2;
+		endY = windowHeight - (windowHeight - offsetSize)/2;
 
-		}
 	}
-
 }
