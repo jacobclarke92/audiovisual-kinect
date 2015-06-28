@@ -12,7 +12,6 @@ import SocketListener from './core/SocketListener';
 import SocketUtil from './utils/SocketUtil';
 import * as PixelUtil from './utils/PixelUtil';
 // Stores
-import * as PaletteStore from './stores/Palettes.js';
 import * as EffectStore from './stores/Effects';
 
 console.log('████████ STARTING APP █████████');
@@ -101,7 +100,7 @@ function loadEffect(effectName) {
 	}
 
 }
-let currentEffectName = 'Circles1';
+let currentEffectName = 'Lines1';
 loadEffect(currentEffectName);
 
 console.log(EffectStore.getEffectParam(currentEffectName, 'lineThickness').toJS());
@@ -122,13 +121,6 @@ $(window).bind('resize', windowResized );
 function windowResized() {
 	renderer.setSize(window.innerWidth, window.innerHeight);
 }
-
-
-// Palettes
-
-PaletteStore.setCurrentPaletteToRandom();
-console.log('Current palette = ', PaletteStore.getCurrentPalette().toJS());
-console.log('Random color = ', PaletteStore.getRandomColor() );
 
 
 
