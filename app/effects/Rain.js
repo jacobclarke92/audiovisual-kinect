@@ -1,6 +1,7 @@
 import PIXI from 'pixi.js/bin/pixi';
 import Dimensions from '../constants/Dimensions';
 import * as PixelUtil from '../utils/PixelUtil';
+import * as EffectUtil from '../utils/EffectUtil';
 import * as NumberUtils from '../utils/NumberUtils';
 import * as PaletteStore from '../stores/Palettes.js';
 
@@ -32,6 +33,8 @@ export default class Circles1 {
 
 	didMount() {
 		this.droplets = [];
+		this.container = EffectUtil.newSizedContainer();
+		this.stage.addChild(this.container);
 	}
 
 	didUnmount() {
@@ -44,14 +47,14 @@ export default class Circles1 {
 
 			let droplet = new Droplet();
 			droplet.init();
-			this.stage.addChild(droplet.shape);
+			this.container.addChild(droplet.shape);
 			this.droplets.push(droplet);
 		}
 
 		for(let i=0; i<this.droplets.length; i ++) {
 			this.droplets[i].draw();
 			if(this.droplets[i].dead) {
-				this.stage.removeChild(this.droplets[i].shape);
+				this.container.removeChild(this.droplets[i].shape);
 				this.droplets.splice(i, 1);
 			}
 		};
@@ -83,11 +86,11 @@ class Droplet {
 		this.shape.clear();
 		this.shape.lineStyle(1, PaletteStore.getRandomColor(), 1);
 		this.shape.moveTo(0,0);
-		this.shape.lineTo(0, -20);
+		this.shape.lineTo(0, -10);
 		this.shape.moveTo(0,0);
-		this.shape.lineTo(-15, -10);
+		this.shape.lineTo(-8, -5);
 		this.shape.moveTo(0,0);
-		this.shape.lineTo(15, -10);
+		this.shape.lineTo(8, -5);
 
 		this.shape.scale.x = 0.5;
 		this.shape.scale.y = 1;
