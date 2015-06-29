@@ -25,7 +25,7 @@ for(let effectName of effectList) {
 
 AppDispatcher.register(function(payload) {
 	if(payload.type === ActionTypes.UPDATE_EFFECT_PARAM) {
-		console.log('effect store intercepted param update', payload);
+		console.log('EffectStore intercepted param update', payload);
 	}
 });
 
@@ -51,4 +51,8 @@ export function getEffectParam(effectName, paramName) {
 
 export function getEffectParamValue(effectName, paramName) {
 	return effectParams.getIn([effectName, paramName, 'value']);
+}
+
+export function getAllEffectParams() {
+	return Immutable.toJS(effectParams);
 }
