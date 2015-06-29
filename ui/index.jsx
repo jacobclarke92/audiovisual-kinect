@@ -4,7 +4,9 @@ import App from './components/App.react';
 React.render(
 	<App />,
 	document.getElementById('flux-ui')
-)
+);
+
+console.log('YEA BOI');
 
 /*
 import SocketUtil from '../app/utils/SocketUtil';

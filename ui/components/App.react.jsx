@@ -1,10 +1,12 @@
-var React = require('react');
-var ComponentSlider = require('./ComponentSlider.react');
+'use strict';
+
+import React from 'react';
+import ComponentSlider from './ComponentSlider.react';
 
 var App = React.createClass({
 	
 	getInitialState: function() {
-
+		return null;
 	},
 
 	componentDidMount: function() {
