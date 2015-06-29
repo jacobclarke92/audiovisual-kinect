@@ -20,6 +20,7 @@ export function updatePixels(imageInstance) {
 
 // Get pixel value from XY position
 export function getPixelValueFromPoint(point) {
+	point = NumberUtils.constrainPoint(point);
 	return pixels[ (point.x + point.y*Dimensions.KINECT_WIDTH)*4 + 2 ];
 }
 
