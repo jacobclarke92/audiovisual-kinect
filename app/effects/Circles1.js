@@ -40,7 +40,7 @@ export default class Circles1 {
 	render() {
 
 		this.stage = EffectUtil.fadeFrames(this.stage, 0.05);
-		this.frame = EffectUtil.newSizedFrame();
+		this.frame = EffectUtil.newSizedGraphic();
 
 		for(let i = 0; i < 5; i ++) {
 

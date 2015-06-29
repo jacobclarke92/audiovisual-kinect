@@ -17,11 +17,28 @@ export function clearStage(pixiContainer) {
 	return pixiContainer;
 }
 
-export function newSizedFrame() {
-	let frame = new PIXI.Graphics();
+export function newSizedGraphic() {
+	let graphic = new PIXI.Graphics();
 	const bounds = DrawBounds.getBounds();
-	frame.scale.x = frame.scale.y = bounds.scalePercent;
-	frame.x = bounds.startX;
-	frame.y = bounds.startY;
-	return frame;
+	graphic.scale.x = graphic.scale.y = bounds.scalePercent;
+	graphic.x = bounds.startX;
+	graphic.y = bounds.startY;
+	return graphic;
+}
+
+export function newSizedContainer() {
+	let container = new PIXI.DisplayObjectContainer();
+	const bounds = DrawBounds.getBounds();
+	container.scale.x = container.scale.y = bounds.scalePercent;
+	container.x = bounds.startX;
+	container.y = bounds.startY;
+	return container;
+}
+
+export function sizePixiObject(object) {
+	const bounds = DrawBounds.getBounds();
+	object.scale.x = object.scale.y = bounds.scalePercent;
+	object.x = bounds.startX;
+	object.y = bounds.startY;
+	return object;
 }
