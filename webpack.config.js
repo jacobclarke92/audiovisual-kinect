@@ -3,7 +3,7 @@ var path = require('path');
 module.exports = {
   entry: {
     core: './app/index.js',
-    ui: './app/ui/index.js'
+    ui: './ui/index.js'
   },
   output: {
     path: './webroot/js',
