@@ -6,8 +6,6 @@ React.render(
 	document.getElementById('flux-ui')
 );
 
-console.log('YEA BOI');
-
 /*
 import SocketUtil from '../app/utils/SocketUtil';
 import ActionTypes from '../app/constants/ActionTypes';
