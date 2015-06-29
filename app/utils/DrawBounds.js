@@ -50,3 +50,5 @@ function process() {
 
 	}
 }
+
+process();
