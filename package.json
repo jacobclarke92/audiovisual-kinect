@@ -4,7 +4,8 @@
   "description": "Visualisation webapp for streamed kinect depth data",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "./launcher | ./server.js && webpack --watch",
+    "start": "./launcher | ./server.js"
   },
   "repository": {
     "type": "git",
