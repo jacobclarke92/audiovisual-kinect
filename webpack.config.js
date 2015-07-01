@@ -15,16 +15,13 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.js$/, 
-        exclude: /node_modules/, 
+        test: /\.jsx?$/, 
         loader: 'babel',
-        include: path.join(__dirname, 'app')
-      },
-      {
-        test: /\.jsx$/, 
-        exclude: /node_modules/, 
-        loader: 'babel',
-        include: path.join(__dirname, 'ui')
+        query: {
+          optional: ['runtime'],
+          stage: 0
+        },
+        exclude: /(node_modules|bower_components)/
       }
     ]
   }
