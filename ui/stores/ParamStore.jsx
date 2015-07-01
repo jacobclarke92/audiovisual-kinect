@@ -20,6 +20,15 @@ let paramGroups = Immutable.fromJS({
 	},
 
 	core: {
+		Filters: {
+			param1: {name: 'param1', label: 'Filter Param Label 1', value: 50, min: 0, max: 110},
+			param2: {name: 'param2', label: 'Filter Param Label 2', value: 50, min: 0, max: 120},
+			param3: {name: 'param3', label: 'Filter Param Label 3', value: 50, min: 0, max: 130},
+			param4: {name: 'param4', label: 'Filter Param Label 4', value: 50, min: 0, max: 140},
+			param5: {name: 'param5', label: 'Filter Param Label 5', value: 50, min: 0, max: 150},
+			param6: {name: 'param6', label: 'Filter Param Label 6', value: 50, min: 0, max: 160},
+			param7: {name: 'param7', label: 'Filter Param Label 7', value: 50, min: 0, max: 170}
+		},
 		Calibration: {
 			param1: {name: 'param1', label: 'Calibration Param Label 1', value: 50, min: 0, max: 110},
 			param2: {name: 'param2', label: 'Calibration Param Label 2', value: 50, min: 0, max: 120},
@@ -58,6 +67,10 @@ var AppStore = _.extend({}, EventEmitter.prototype, {
   addChangeListener: function(callback) {
   	this.on('change', callback);
   },
+
+  removeChangeListener: function(callback) {
+  	this.removeListener('change', callback);
+  }
 
 });
 

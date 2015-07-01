@@ -20,14 +20,16 @@ let ComponentSliders = React.createClass({
 		ParamStore.addChangeListener(this._onChange);
 	},
 
+	componentWillUnmount: function() {
+		ParamStore.removeChangeListener(function() {
+			console.log('paramstore change listener killed');
+		});
+	},
+
 	_onChange: function() {
 		this.setState({
 			params: ParamStore.getParamGroup(this.props.paramsPath)
 		});
-	},
-
-	componentWillUnmount: function() {
-
 	},
 
 	handleSliderChange: function(event) {
@@ -46,7 +48,7 @@ let ComponentSliders = React.createClass({
 		
 		let rows = [];
 		for(let key in this.state.params) {
-			rows.push( <ComponentSlider param={this.state.params[key]} onChange={this.handleSliderChange} /> );
+			rows.push( <ComponentSlider param={this.state.params[key]} onChange={this.handleSliderChange} key={key} /> );
 		}
 
 		return ( <div>{rows}</div> );
