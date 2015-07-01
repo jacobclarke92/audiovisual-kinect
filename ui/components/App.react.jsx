@@ -1,9 +1,16 @@
 import React from 'react';
 import ComponentSliders from './Sliders.react';
 import ComponentEffectList from './EffectList.react';
-import ComponentTabs from 'react-simpletabs';
+import ReactTabs from 'react-tabs';
 
 import AppActions from '../actions/AppActions';
+
+
+let Tab = ReactTabs.Tab;
+let Tabs = ReactTabs.Tabs;
+let TabList = ReactTabs.TabList;
+let TabPanel = ReactTabs.TabPanel;
+
 
 let App = React.createClass({
 	
@@ -27,25 +34,29 @@ let App = React.createClass({
 		return (
 			<div className="app">
 				<p>Hello</p>
-				<ComponentTabs>
+				<Tabs>
 
-					<ComponentTabs.Panel title='Effect List'>
+					<TabList>
+						<Tab>Effect List</Tab>
+						<Tab>Effect Params</Tab>
+						<Tab>Filter Params</Tab>
+						<Tab>Calibration Params</Tab>
+					</TabList>
+
+					<TabPanel title='Effect List'>
 						<ComponentEffectList />
-					</ComponentTabs.Panel>
-
-					<ComponentTabs.Panel title='Effect Params'>
+					</TabPanel>
+					<TabPanel title='Effect Params'>
 						<ComponentSliders key='effectParams' paramsPath={['effect','Rain']} />
-					</ComponentTabs.Panel>
-
-					<ComponentTabs.Panel title='Filter Params'>
+					</TabPanel>
+					<TabPanel title='Filter Params'>
 						<ComponentSliders key='filterParams' paramsPath={['core','Filters']} />
-					</ComponentTabs.Panel>
-
-					<ComponentTabs.Panel title='Calibration'>
+					</TabPanel>
+					<TabPanel title='Calibration'>
 						<ComponentSliders key='calibrationParams' paramsPath={['core','Calibration']} />
-					</ComponentTabs.Panel>
+					</TabPanel>
 
-				</ComponentTabs>
+				</Tabs>
 			</div>
 		);
 	}

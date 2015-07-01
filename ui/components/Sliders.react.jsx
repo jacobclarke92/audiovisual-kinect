@@ -16,14 +16,15 @@ let ComponentSliders = React.createClass({
 	},
 
 	componentWillMount: function() {
-		console.log(this.state);
+		console.log('slider will mount');
 		ParamStore.addChangeListener(this._onChange);
+		return true;
 	},
 
 	componentWillUnmount: function() {
-		ParamStore.removeChangeListener(function() {
-			console.log('paramstore change listener killed');
-		});
+		console.log('slider will unmount');
+		ParamStore.removeChangeListener(this._onChange);
+		return true;
 	},
 
 	_onChange: function() {
