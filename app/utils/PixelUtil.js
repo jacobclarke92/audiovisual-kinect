@@ -1,12 +1,12 @@
 import Point from 'point-geometry';
 
-import Dimensions from '../constants/Dimensions';
+import {KINECT_WIDTH, KINECT_HEIGHT} from '../constants/Dimensions';
 import * as Globals from '../stores/Globals';
 import * as NumberUtils from '../utils/NumberUtils';
 
 const bufferCanvas = document.createElement('canvas');
-bufferCanvas.width = Dimensions.KINECT_WIDTH;
-bufferCanvas.height = Dimensions.KINECT_HEIGHT;
+bufferCanvas.width = KINECT_WIDTH;
+bufferCanvas.height = KINECT_HEIGHT;
 const bufferCanvasContext = bufferCanvas.getContext('2d');
 
 let pixels = [];
@@ -15,13 +15,13 @@ const attemptsBeforePanic = 25;
 // Called externally upon image update
 export function updatePixels(imageInstance) {
 	bufferCanvasContext.drawImage(imageInstance, 0, 0);
-	pixels = bufferCanvasContext.getImageData(0,0, Dimensions.KINECT_WIDTH, Dimensions.KINECT_HEIGHT).data;
+	pixels = bufferCanvasContext.getImageData(0,0, KINECT_WIDTH, KINECT_HEIGHT).data;
 }
 
 // Get pixel value from XY position
 export function getPixelValueFromPoint(point) {
 	point = NumberUtils.constrainPoint(point);
-	return pixels[ (point.x + point.y*Dimensions.KINECT_WIDTH)*4 + 2 ];
+	return pixels[ (point.x + point.y*KINECT_WIDTH)*4 + 2 ];
 }
 
 // Is pixel value within current allowed range?

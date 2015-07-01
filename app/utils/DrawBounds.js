@@ -1,4 +1,4 @@
-import Dimensions from '../constants/Dimensions';
+import * as Dimensions from '../constants/Dimensions';
 
 let windowWidth = window.innerWidth;
 let windowHeight = window.innerHeight;

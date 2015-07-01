@@ -1,5 +1,5 @@
 import Point from 'point-geometry';
-import Dimensions from '../constants/Dimensions';
+import * as Dimensions from '../constants/Dimensions';
 
 export function rand(range) {
 	let start = 0, end = range;
