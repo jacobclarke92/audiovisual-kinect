@@ -16,9 +16,8 @@ let TabPanel = ReactTabs.TabPanel;
 /**
  * Retrieves state from stores for current props.
  */
-function getState(props) { // eslint-disable-line no-unused-vars
-
-	const effectParams = ParamStore.getParamGroup(['effect']);
+function getState(props) { // eslint-disable-line no-unused-vars\
+	const effectParams = ParamStore.getParamsByFamily('Effect');
 
 	return {
 		effectParams

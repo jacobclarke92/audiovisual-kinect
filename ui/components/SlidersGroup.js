@@ -5,7 +5,7 @@ import AppActions from '../actions/AppActions';
 export default class SlidersGroup {
 
 	handleSliderChange(item, event) {
-		AppActions.paramValueUpdated(item.get('name'), parseFloat(event.target.value));
+		AppActions.paramValueUpdated(item.get('family'), item.get('name'), parseFloat(event.target.value));
 	}
 
 	render() {
