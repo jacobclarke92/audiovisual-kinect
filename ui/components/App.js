@@ -16,19 +16,18 @@ let TabPanel = ReactTabs.TabPanel;
 /**
  * Retrieves state from stores for current props.
  */
-function getState(props) { // eslint-disable-line no-unused-vars\
-	const effectParams = ParamStore.getParamsByFamily('Effect');
+function getState(props) {
 
-	return {
-		effectParams
-	};
+	const effectParams = ParamStore.getParamsByFamily('Effect');
+	const filterParams = ParamStore.getParamsByFamily('Filter');
+	const calibrationParams = ParamStore.getParamsByFamily('Calibration');
+
+	return {effectParams, filterParams, calibrationParams};
 }
 
 const stores = [ParamStore];
 @connectToStores(stores, getState)
 export default class App extends React.Component {
-	
-
 
 	render() {
 		return (
@@ -38,8 +37,8 @@ export default class App extends React.Component {
 					<TabList>
 						{/*<Tab>Effect List</Tab>*/}
 						<Tab>Effect Params</Tab>
-						{/*<Tab>Filter Params</Tab>
-						<Tab>Calibration Params</Tab>*/}
+						<Tab>Filter Params</Tab>
+						<Tab>Calibration Params</Tab>
 					</TabList>
 					{/*}
 					<TabPanel title='Effect List'>
@@ -48,12 +47,12 @@ export default class App extends React.Component {
 					<TabPanel title='Effect Params'>
 						<SlidersGroup items={this.props.effectParams} />
 					</TabPanel>
-					{/*<TabPanel title='Filter Params'>
-						<SlidersGroup key='filterParams' paramsPath={['core','Filters']} />
+					<TabPanel title='Filter Params'>
+						<SlidersGroup items={this.props.filterParams} />
 					</TabPanel>
 					<TabPanel title='Calibration'>
-						<SlidersGroup key='calibrationParams' paramsPath={['core','Calibration']} />
-					</TabPanel>*/}
+						<SlidersGroup items={this.props.calibrationParams} />
+					</TabPanel>
 
 				</Tabs>
 			</div>
