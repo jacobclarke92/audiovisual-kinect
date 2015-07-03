@@ -1,6 +1,6 @@
-import { EventEmitter } from 'events';
-import _ from 'lodash';
 import Immutable from 'immutable';
+
+import * as StoreUtils from '../utils/StoreUtils';
 
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import AppConstants from '../constants/AppConstants';
@@ -33,42 +33,6 @@ let params = Immutable.fromJS([
 	
 ]);
 
-// var result = map.find(function(obj){return obj.get('id') === 4;});
-// var object = map.filter(function(obj){return obj.get('id') === 4}).first();
-
-var ParamStore = _.extend({}, EventEmitter.prototype, {
-  
-	getParamsByFamily(family) {
-		return params.filter(function(obj) {
-			return obj.get('family') === family;
-		});
-	},
-
-	loadNewEffectParams(paramArray) {
-		const paramsWithoutEffect = params.filter(function(obj) {
-			return obj.get('family') !== 'Effect';
-		});
-		const newParams = paramsWithoutEffect.concat(Immutable.fromJS(paramArray))
-		params = newParams;
-	},
-
-	emitChange() {
-		this.emit('change');
-	},
-
-	addChangeListener(callback) {
-		this.on('change', callback);
-	},
-
-	removeChangeListener(callback) {
-		this.removeListener('change', callback);
-	}
-
-});
-
-module.exports = ParamStore;
-
-
 AppDispatcher.register(function(payload) {
  
   switch(payload.type) {
@@ -88,18 +52,14 @@ AppDispatcher.register(function(payload) {
   return true;
 
 });
-/*
-export default class ParamStore extends EventEmitter {
 
-	constructor() {
-		super();
-	}
-
+const ParamStore = StoreUtils.createStore({
+  
 	getParamsByFamily(family) {
 		return params.filter(function(obj) {
 			return obj.get('family') === family;
 		});
-	}
+	},
 
 	loadNewEffectParams(paramArray) {
 		const paramsWithoutEffect = params.filter(function(obj) {
@@ -109,16 +69,6 @@ export default class ParamStore extends EventEmitter {
 		params = newParams;
 	}
 
-	emitChange() {
-		this.emit('change');
-	}
+});
 
-	addChangeListener(callback) {
-		this.on('change', callback);
-	}
-
-	removeChangeListener(callback) {
-		this.removeListener('change', callback);
-	}
-
-}*/
+export default ParamStore;
