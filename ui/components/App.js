@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactTabs from 'react-tabs';
 
-import ParamStore from '../stores/ParamStore';
+import ParamStore from '../stores/Params';
 import AppActions from '../actions/AppActions';
 import connectToStores from '../utils/connectToStores';
 

@@ -1,4 +1,4 @@
-import AppDispatcher from '../dispatcher/AppDispatcher';
+import AppDispatcher from '../AppDispatcher';
 import AppConstants from '../constants/AppConstants';
 
 export default {

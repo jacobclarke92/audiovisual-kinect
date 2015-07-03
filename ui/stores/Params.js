@@ -1,8 +1,6 @@
 import Immutable from 'immutable';
-
 import * as StoreUtils from '../utils/StoreUtils';
-
-import AppDispatcher from '../dispatcher/AppDispatcher';
+import AppDispatcher from '../AppDispatcher';
 import AppConstants from '../constants/AppConstants';
 
 let params = Immutable.fromJS([
