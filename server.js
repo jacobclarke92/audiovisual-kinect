@@ -121,6 +121,11 @@ io.on('connection', function (socket) {
 		if(data.request == 'SET') console.log('Effect list received!', data.data.effectList);
 	});
 
+	socket.on('effectParams', function (data) {
+		io.emit('effectParams', data);
+		if(data.request == 'SET') console.log('Effect params received!', data.data);
+	});
+
 	socket.on('serviceStatus', function (data) {
 		io.emit('serviceStatus', data);
 		if(data.request == 'SET') console.log('Service status sent from ' + data.deviceName + ' for ' + data.data.service, data.data);
@@ -130,8 +135,9 @@ io.on('connection', function (socket) {
 		io.emit('currentEffectParameters', data);
 	});
 
-	socket.on('effectParam', function(data) {
-		io.emit('effectParam', data);
+	socket.on('paramUpdated', function(data) {
+		io.emit('paramUpdated', data);
+		if(data.request == 'SET') console.log('Param updated from ' + data.deviceName);
 	});
 
 	socket.on('disconnect', function () {

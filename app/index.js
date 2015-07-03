@@ -3,7 +3,7 @@ import $ from 'jquery';
 import Immutable from 'immutable';
 import PIXI from 'pixi.js/bin/pixi';
 // Core
-import AppDispatcher from './AppDispatcher';
+import * as AppActions from './actions/AppActions';
 import KinectStream from './core/KinectStream';
 import AudioStream from './core/AudioStream';
 import Renderer from './core/Renderer';
@@ -16,6 +16,20 @@ import * as PixelUtil from './utils/PixelUtil';
 import * as EffectStore from './stores/Effects';
 
 console.log('████████ STARTING APP █████████');
+
+// Emit Socket.IO greeting
+
+let socketUtil = new SocketUtil();
+socketUtil.send('deviceActive', null);
+
+let effectList = EffectStore.getEffectList();
+socketUtil.listenAndReturn('effectList', {effectList: effectList});
+
+socketUtil.listen('paramUpdated', function(data) {
+	if(data.deviceName === 'Core') return;
+	console.log(data);
+	AppActions.updateParam(data);
+});
 
 
 // Init kinect image stream
@@ -100,20 +114,20 @@ function loadEffect(effectName) {
 		audioStream.stop();
 	}
 
+	let currentEffectParams = currentEffect.getParamDefaults();
+	for(let i in currentEffectParams) {
+		currentEffectParams[i].family = 'Effect';
+		currentEffectParams[i].effectName = effectName;
+	}
+
+	socketUtil.send('effectParams', currentEffectParams);
+
 }
 let currentEffectName = 'Rain';
 loadEffect(currentEffectName);
 
-console.log(EffectStore.getEffectParam(currentEffectName, 'lineThickness').toJS());
-console.log(EffectStore.getEffectParamValue(currentEffectName, 'lineThickness'));
-
-// Emit Socket.IO greeting
-
-let socketUtil = new SocketUtil();
-socketUtil.send('deviceActive', null);
-
-let effectList = EffectStore.getEffectList();
-socketUtil.listenAndReturn('effectList', {effectList: effectList});
+// console.log(EffectStore.getEffectParam(currentEffectName, 'lineThickness').toJS());
+// console.log(EffectStore.getEffectParamValue(currentEffectName, 'lineThickness'));
 
 // Window listener
 

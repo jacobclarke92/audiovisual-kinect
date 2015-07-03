@@ -2,7 +2,7 @@
 
 export default class DepthImage {
 
-	paramDefaults() {
+	getParamDefaults() {
 		return {
 			
 		};

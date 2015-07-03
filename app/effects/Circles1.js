@@ -5,7 +5,7 @@ import * as PaletteStore from '../stores/Palettes.js';
 
 export default class Circles1 {
 
-	paramDefaults() {
+	getParamDefaults() {
 		return {
 			lineThickness: {
 				label: 'Line Thickness (px)',

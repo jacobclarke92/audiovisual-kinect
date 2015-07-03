@@ -1,5 +1,5 @@
 import PIXI from 'pixi.js/bin/pixi';
-import Dimensions from '../constants/Dimensions';
+import * as Dimensions from '../constants/Dimensions';
 import * as PixelUtil from '../utils/PixelUtil';
 import * as EffectUtil from '../utils/EffectUtil';
 import * as NumberUtils from '../utils/NumberUtils';
@@ -7,20 +7,25 @@ import * as PaletteStore from '../stores/Palettes.js';
 
 export default class Circles1 {
 
-	paramDefaults() {
-		return {
-			lineThickness: {
+	getParamDefaults() {
+		return [
+			{
+				name: 'lineThickness',
 				label: 'Line Thickness (px)',
+				value: 2,
 				min: 1,
 				max: 50,
-				value: 2
+				step: 0.5,
 			},
-			anotherParam: {
+			{
+				name: 'anotherParam',
+				label: 'Another Parameter',
+				value: 50,
 				min: 1,
 				max: 100,
-				value: 50
+				step: 1,
 			}
-		};
+		];
 	}
 
 	getEffectRequirements() {

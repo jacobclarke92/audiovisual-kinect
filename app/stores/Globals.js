@@ -1,7 +1,7 @@
 import Immutable from 'immutable';
 
 let globalVars = Immutable.Map(Immutable.fromJS({
-	minDepth: 170,
+	minDepth: 150,
 	maxDepth: 255,
 }));
 

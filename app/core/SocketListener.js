@@ -1,5 +1,5 @@
 import SocketUtil from '../utils/SocketUtil';
-import * as EffectActionCreators from '../actions/EffectActionCreators';
+import * as EffectActionCreators from '../actions/AppActions';
 
 let socketUtil = new SocketUtil();
 

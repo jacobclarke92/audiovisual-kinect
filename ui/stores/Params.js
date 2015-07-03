@@ -63,8 +63,11 @@ const ParamStore = StoreUtils.createStore({
 		const paramsWithoutEffect = params.filter(function(obj) {
 			return obj.get('family') !== 'Effect';
 		});
-		const newParams = paramsWithoutEffect.concat(Immutable.fromJS(paramArray))
+		console.log(paramsWithoutEffect.toJS());
+		const newParams = paramsWithoutEffect.concat(Immutable.fromJS(paramArray));
+		console.log(newParams.toJS());
 		params = newParams;
+		ParamStore.emitChange();
 	}
 
 });

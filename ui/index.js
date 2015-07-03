@@ -1,42 +1,34 @@
 import React from 'react';
 import App from './components/App';
+import SocketUtil from '../app/utils/SocketUtil';
+import ParamStore from './stores/Params';
+
+console.log('████████ STARTING UI █████████');
 
 React.render(
 	<App />,
 	document.getElementById('flux-ui')
 );
 
-/*
-import SocketUtil from '../app/utils/SocketUtil';
-import ActionTypes from '../app/constants/ActionTypes';
-import AppDispatcher from '../app/AppDispatcher';
 
-let socketUtil = new SocketUtil('UI');
+
+const socketUtil = new SocketUtil('UI');
 socketUtil.send('deviceActive', null);
 
-console.log('████████ STARTING UI █████████');
-
-window.addEventListener('click', function(event) {
-	console.log('click');
-	socketUtil.send(ActionTypes.UPDATE_EFFECT_PARAM, {
-		effect: 'Rain',
-		param: {
-			name: 'lineThickness',
-			value: 3
-		}
-	});
-});
-
-
-socketUtil.listen('effectParam', function(data) {
+socketUtil.listen('effectParams', function(data) {
 	if(data.deviceName != 'Core') return;
 
 	console.log('received effect param update from Core');
 });
 
 socketUtil.listen('serviceStatus', function(data) {
-	if(data.deviceName != 'Core') return;
-
-	console.log('received service status update from Core');
+	if(data.deviceName !== 'Core') return;
+	console.log('received service status update from Core: ', data.data);
 });
-*/
+
+socketUtil.listen('effectParams', function(data) {
+	if(data.deviceName !== 'Core') return;
+	console.log('received effect params from Core:', data.data);
+
+	ParamStore.loadNewEffectParams(data.data);
+});

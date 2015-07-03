@@ -1,5 +1,8 @@
 import AppDispatcher from '../AppDispatcher';
 import AppConstants from '../constants/AppConstants';
+import SocketUtil from '../../app/utils/SocketUtil';
+
+const socketUtil = new SocketUtil('UI');
 
 export default {
 	paramValueUpdated: function(family, name, value) {
@@ -8,7 +11,8 @@ export default {
 			family,
 			name,
 			value
-		})
+		});
+		socketUtil.send('paramUpdated', null);
 	}
 }
 

@@ -19,7 +19,7 @@ for(let effectName of effectList) {
 	currentEffect = new Effects[effectName]();
 	effects = effects.set(effectName, currentEffect);
 
-	currentEffectParams = currentEffect.paramDefaults();
+	currentEffectParams = currentEffect.getParamDefaults();
 	effectParams = effectParams.set(effectName, Immutable.fromJS(currentEffectParams));
 }
 

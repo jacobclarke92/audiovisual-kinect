@@ -1,10 +1,10 @@
 import AppDispatcher from '../AppDispatcher';
 import ActionTypes from '../constants/ActionTypes';
 
-export function updateEffectParam(data) {
+export function updateParam(data) {
 
 	AppDispatcher.dispatch({
-		type: ActionTypes.UPDATE_EFFECT_PARAM,
+		type: ActionTypes.UPDATE_PARAM,
 		data
 	});
 
