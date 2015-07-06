@@ -27,7 +27,7 @@ export function newSizedGraphic() {
 }
 
 export function newSizedContainer() {
-	let container = new PIXI.DisplayObjectContainer();
+	let container = new PIXI.Container();
 	const bounds = DrawBounds.getBounds();
 	container.scale.x = container.scale.y = bounds.scalePercent;
 	container.x = bounds.startX;
