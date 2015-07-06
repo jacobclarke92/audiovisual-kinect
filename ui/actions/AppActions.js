@@ -5,14 +5,14 @@ import SocketUtil from '../../app/utils/SocketUtil';
 const socketUtil = new SocketUtil('UI');
 
 export default {
-	paramValueUpdated: function(family, name, value) {
+	paramValueUpdated: function(param, family, name, value) {
 		AppDispatcher.dispatch({
 			type: AppConstants.PARAM_VALUE_UPDATED,
 			family,
 			name,
 			value
 		});
-		socketUtil.send('paramUpdated', null);
+		socketUtil.send('paramUpdated', param.toJS());
 	}
 }
 

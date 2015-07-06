@@ -35,15 +35,14 @@ export default class App extends React.Component {
 				<p>Hello</p>
 				<Tabs>
 					<TabList>
-						{/*<Tab>Effect List</Tab>*/}
+						<Tab>Effect List</Tab>
 						<Tab>Effect Params</Tab>
 						<Tab>Filter Params</Tab>
 						<Tab>Calibration Params</Tab>
 					</TabList>
-					{/*}
 					<TabPanel title='Effect List'>
-						<ComponentEffectList />
-					</TabPanel>*/}
+						<EffectList />
+					</TabPanel>
 					<TabPanel title='Effect Params'>
 						<SlidersGroup items={this.props.effectParams} />
 					</TabPanel>
