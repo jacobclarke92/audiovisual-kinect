@@ -14,6 +14,7 @@ import * as DrawBounds from './utils/DrawBounds';
 import * as PixelUtil from './utils/PixelUtil';
 // Stores
 import * as EffectStore from './stores/Effects';
+import ParamStore from './stores/Params';
 
 console.log('████████ STARTING APP █████████');
 
@@ -23,11 +24,12 @@ let socketUtil = new SocketUtil();
 socketUtil.send('deviceActive', null);
 
 let effectList = EffectStore.getEffectList();
-socketUtil.listenAndReturn('effectList', {effectList: effectList});
+socketUtil.listenAndReturn('effectList', {effectList});
+socketUtil.send('effectList', {effectList});
 
 socketUtil.listen('paramUpdated', function(data) {
 	if(data.deviceName === 'Core') return;
-	console.log(data);
+	console.log(data.data);
 	AppActions.updateParam(data);
 });
 
@@ -59,14 +61,14 @@ function processFrame() {
 		document.getElementById('testImage').src = currentImage.src;
 	}
 
-	if(currentEffectRequirements&& currentEffectRequirements.audio) {
+	if(currentEffectRequirements && currentEffectRequirements.audio) {
 		// console.log(audioStream.getVolume());
 		audioStream.process();
 	}
 	
 	// Process current effect code and send to renderer
-	currentEffect.render();
-	renderer.renderFrame(currentEffect.stage);
+	EffectStore.renderCurrentEffect();
+	renderer.renderFrame(EffectStore.getCurrentEffectStage());
 
 	if(animating) requestAnimationFrame(() => processFrame());
 }
@@ -89,45 +91,23 @@ renderer.init();
 
 // Get effects list
 
-let currentEffect = null;
 let currentEffectRequirements = null;
 
 function loadEffect(effectName) {
 
-	if(currentEffect) currentEffect.didUnmount();
+	AppActions.changeEffect({effectName});
+	
+	currentEffectRequirements = EffectStore.getCurrentEffectRequirements();
 
-	currentEffect = EffectStore.getEffect(effectName);
-	currentEffectRequirements = currentEffect.getEffectRequirements();
+	if(currentEffectRequirements.kinect) kinectStream.start();
+	else kinectStream.stop();
 
-	currentEffect.stage = new PIXI.Container();
-	currentEffect.didMount();
+	if(currentEffectRequirements.audio) audioStream.start();
+	else audioStream.stop();
 
-	if(currentEffectRequirements.kinect) {
-		kinectStream.start();
-	}else {
-		kinectStream.stop();
-	}
-
-	if(currentEffectRequirements.audio) {
-		audioStream.start();
-	}else {
-		audioStream.stop();
-	}
-
-	let currentEffectParams = currentEffect.getParamDefaults();
-	for(let i in currentEffectParams) {
-		currentEffectParams[i].family = 'Effect';
-		currentEffectParams[i].effectName = effectName;
-	}
-
-	socketUtil.send('effectParams', currentEffectParams);
+	socketUtil.send('effectParams', EffectStore.getCurrentEffectParams());
 
 }
-let currentEffectName = 'Rain';
-loadEffect(currentEffectName);
-
-// console.log(EffectStore.getEffectParam(currentEffectName, 'lineThickness').toJS());
-// console.log(EffectStore.getEffectParamValue(currentEffectName, 'lineThickness'));
 
 // Window listener
 
@@ -145,6 +125,7 @@ function windowResized() {
 
 function startEverything() {
 	windowResized();
+	loadEffect('Rain');
 	startRendering();
 }
 
