@@ -125,7 +125,7 @@ function windowResized() {
 
 function startEverything() {
 	windowResized();
-	loadEffect('Rain');
+	loadEffect('Sparks');
 	startRendering();
 }
 
