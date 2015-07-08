@@ -4,7 +4,8 @@ import * as Dimensions from '../constants/Dimensions';
 import * as PixelUtil from '../utils/PixelUtil';
 import * as EffectUtil from '../utils/EffectUtil';
 import * as NumberUtils from '../utils/NumberUtils';
-import * as PaletteStore from '../stores/Palettes.js';
+import * as ParamStore from '../stores/Params'
+import * as PaletteStore from '../stores/Palettes';
 
 
 export default class Circles1 {
@@ -15,7 +16,7 @@ export default class Circles1 {
 				name: 'lineThickness',
 				label: 'Line Thickness (px)',
 				value: 2,
-				min: 1,
+				min: 0.1,
 				max: 50,
 				step: 0.5,
 			},
@@ -98,6 +99,9 @@ class Particle {
 	}
 
 	draw() {
+		const newVar = ParamStore.getEffectParamValue('lineThickness', 'Sparks');
+		// if(newVar != this.lineThickness) console.log(newVar, this.lineThickness);
+		this.lineThickness = ParamStore.getEffectParamValue('lineThickness', 'Sparks');
 
 		this.shape.clear();
 		this.shape.lineStyle(this.lineThickness, PaletteStore.getRandomColor(), 1);

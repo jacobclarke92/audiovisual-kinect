@@ -31,9 +31,9 @@ AppDispatcher.register(function(payload) {
 
   	case ActionTypes.PARAM_VALUE_UPDATED:
   		const index = params.findIndex(function(obj) {
-  			return (obj.get('name') === payload.name && obj.get('family') === payload.family);
+  			return (obj.get('name') === payload.data.name && obj.get('family') === payload.data.family);
   		});
-  		params = params.setIn([index, 'value'], payload.value);
+  		params = params.setIn([index, 'value'], payload.data.value);
   		break;
 
   	default:
@@ -57,6 +57,13 @@ const ParamStore = StoreUtils.createStore({
     return params.filter(function(obj) {
       return (obj.get('family') === 'Effect' && obj.get('effectName') === effectName);
     });
+  },
+
+  getEffectParamValue(paramName, effectName) {
+    const index = params.findIndex(function(obj) {
+      return (obj.get('name') === paramName && obj.get('family') === 'Effect' && obj.get('effectName') === effectName);
+    });
+   return params.getIn([index, 'value']);
   },
   
   addEffectParams(paramArray) {

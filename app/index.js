@@ -29,8 +29,7 @@ socketUtil.send('effectList', {effectList});
 
 socketUtil.listen('paramUpdated', function(data) {
 	if(data.deviceName === 'Core') return;
-	console.log(data.data);
-	AppActions.updateParam(data);
+	AppActions.updateParam(data.data);
 });
 
 
