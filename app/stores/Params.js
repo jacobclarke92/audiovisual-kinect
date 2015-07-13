@@ -11,6 +11,7 @@ let params = Immutable.fromJS([
   {family: 'Filter', name: 'twist', label: 'Twist', value: 0, min: 0, max: 15, step: 0.1},
   {family: 'Filter', name: 'invert', label: 'Invert', value: 0, min: -2.5, max: 2.5, step: 0.05},
   {family: 'Filter', name: 'blur', label: 'Blur', value: 0, min: 0, max: 30, step: 0.5},
+  {family: 'Filter', name: 'glow', label: 'Glow', value: 0, min: 0, max: 10, step: 0.2},
   
   {family: 'Calibration', name: 'minRange', label: 'Minimum Depth', value: 50, min: 0, max: 110, step: 1},
   {family: 'Calibration', name: 'maxRange', label: 'Maximum Depth', value: 50, min: 0, max: 120, step: 1},
@@ -74,7 +75,14 @@ const ParamStore = StoreUtils.createStore({
     const index = params.findIndex(function(obj) {
       return (obj.get('name') === paramName && obj.get('family') === 'Effect' && obj.get('effectName') === effectName);
     });
-   return params.getIn([index, 'value']);
+    return params.getIn([index, 'value']);
+  },
+
+  getParamValue(family, paramName) {
+    const index = params.findIndex(function(obj) {
+      return (obj.get('name') === paramName && obj.get('family') === family);
+    });
+    return params.getIn([index, 'value']);
   },
   
   addEffectParams(paramArray) {
