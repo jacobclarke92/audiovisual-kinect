@@ -36,4 +36,5 @@ socketUtil.listen('effectList', function(data) {
 	AppActions.effectListReceived(data.data.effectList);
 });
 
-socketUtil.send('effectParams', null);
+socketUtil.request('effectList');
+socketUtil.request('effectParams');

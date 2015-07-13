@@ -26,6 +26,10 @@ let effectList = EffectStore.getList();
 socketUtil.listenAndReturn('effectList', {effectList});
 socketUtil.send('effectList', {effectList});
 
+socketUtil.listenAndReturn('effectParams', function() {
+	return renderer.getCurrentEffectParams();
+});
+
 socketUtil.listen('paramUpdated', function(data) {
 	if(data.deviceName === 'Core') return;
 	AppActions.updateParam(data.data);
@@ -33,7 +37,7 @@ socketUtil.listen('paramUpdated', function(data) {
 
 socketUtil.listen('effectChanged', function(data) {
 	if(data.deviceName === 'Core') return;
-	console.'Effect change request received';
+	console.log('Effect change request received');
 	loadEffect(data.data);
 });
 

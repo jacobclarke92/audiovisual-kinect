@@ -74,4 +74,12 @@ export default class Renderer {
 		return currentEffect.getEffectRequirements();
 	}
 
+	getCurrentEffectName() {
+		return currentEffectName;
+	}
+
+	getCurrentEffectParams() {
+		return ParamStore.getEffectParams(currentEffectName);
+	}
+
 }
