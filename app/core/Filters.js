@@ -14,6 +14,7 @@ export default class Filters {
 		this.rgbSplitFilter 		= new PIXI.filters.RGBSplitFilter();
 		this.twistFilter 			= new PIXI.filters.TwistFilter();
 		this.glowFilter				= new ExtraFilters.GlowFilter(renderer.width, renderer.height, 15, 100, 0, 0xFFFFFF, 0.1);
+		this.outlineFilter 			= new ExtraFilters.OutlineFilter(renderer.width, renderer.height, 5, 0xFFFFFF);
 
 		console.log("******");
 		console.log(this.glowFilter);
@@ -23,7 +24,7 @@ export default class Filters {
 
 		this.filters = [];
 
-		window.test = this.glowFilter;
+		window.test = this.outlineFilter;
 
 	}
 
@@ -45,12 +46,16 @@ export default class Filters {
 		const glow = ParamStore.getParamValue('Filter', 'glow');
 		this.glowFilter.distance = glow;		
 
+		const outline = ParamStore.getParamValue('Filter', 'outline');
+		this.outlineFilter.thickness = outline;	
+
 		this.filters = [];
-		if(rgbSplit !== 0) this.filters.push(this.rgbSplitFilter);
-		if(twist !== 0) this.filters.push(this.twistFilter);
-		if(blur !== 0) this.filters.push(this.blurFilter);
-		if(pixelate !== 0) this.filters.push(this.pixelateFilter);
-		if(glow !== 0) this.filters.push(this.glowFilter);
+		if(rgbSplit !== 0) 	this.filters.push(this.rgbSplitFilter);
+		if(twist 	!== 0) 	this.filters.push(this.twistFilter);
+		if(blur 	!== 0) 	this.filters.push(this.blurFilter);
+		if(pixelate !== 0) 	this.filters.push(this.pixelateFilter);
+		if(glow 	!== 0) 	this.filters.push(this.glowFilter);
+		if(outline 	!== 0)	this.filters.push(this.outlineFilter);
 	}
 
 	get() {

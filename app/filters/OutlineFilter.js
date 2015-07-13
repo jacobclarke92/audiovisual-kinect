@@ -86,5 +86,14 @@ Object.defineProperties(OutlineFilter.prototype, {
         set: function(value) {
             this.uniforms.pixelHeight.value = 1 / value;
         }
+    },
+    
+    thickness: {
+        get: function () {
+            return this.uniforms.thickness
+        },
+        set: function(value) {
+            this.uniforms.thickness.value = value;
+        }
     }
 });
