@@ -18,6 +18,30 @@ export default class Circles1 {
 				min: 0.1,
 				max: 50,
 				step: 0.5,
+			},
+			{
+				name: 'minSpeed',
+				label: 'Minimum Speed',
+				value: 2,
+				min: 0.5,
+				max: 20,
+				step: 0.5,
+			},
+			{
+				name: 'addSpeed',
+				label: 'Additional Speed Range',
+				value: 5,
+				min: 0,
+				max: 20,
+				step: 1,
+			},
+			{
+				name: 'spawnUpTo',
+				label: 'Spawn up to (per frame)',
+				value: 5,
+				min: 1,
+				max: 20,
+				step: 1,
 			}
 		];
 	}
@@ -43,7 +67,7 @@ export default class Circles1 {
 
 	render() {
 
-		for(let i = 0; i < NumberUtils.randRound([0,2]); i ++) {
+		for(let i = 0; i < NumberUtils.randRound([0,this.params.spawnUpTo]); i ++) {
 
 			const particle = new Particle();
 			particle.params = this.params;
@@ -76,7 +100,7 @@ class Particle {
 		// const angle = this.startPoint.angleWith(this.endPoint); //this does some cool shit
 		const angle = Math.atan2(this.endPoint.y-this.startPoint.y, this.endPoint.x-this.startPoint.x);//this.startPoint.angleTo(this.endPoint);
 		const distance = this.startPoint.dist(this.endPoint);
-		const speed = NumberUtils.rand([2, 7]);
+		const speed = NumberUtils.rand([this.params.minSpeed, this.params.minSpeed+this.params.addSpeed]);
 
 		this.timeToDie = Math.ceil(distance/speed);
 		this.life = this.timeToDie * 2;
