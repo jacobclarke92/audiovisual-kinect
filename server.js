@@ -126,6 +126,16 @@ io.on('connection', function (socket) {
 		if(data.request == 'SET') console.log('Effect params received!', data.data);
 	});
 
+	socket.on('filterParams', function (data) {
+		io.emit('filterParams', data);
+		if(data.request == 'SET') console.log('Filter params received!', data.data);
+	});
+
+	socket.on('calibrationParams', function (data) {
+		io.emit('calibrationParams', data);
+		if(data.request == 'SET') console.log('Calibration params received!', data.data);
+	});
+
 	socket.on('effectChanged', function (data) {
 		io.emit('effectChanged', data);
 		if(data.request == 'SET') console.log('Effect change received!', data.data);

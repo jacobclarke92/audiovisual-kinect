@@ -30,6 +30,15 @@ socketUtil.listenAndReturn('effectParams', function() {
 	return renderer.getCurrentEffectParams();
 });
 
+socketUtil.listenAndReturn('filterParams', function() {
+	return ParamStore.getParamsByFamily('Filter');
+});
+
+socketUtil.listenAndReturn('calibrationParams', function() {
+	return ParamStore.getParamsByFamily('Calibration');
+});
+socketUtil.send('calibrationParams', ParamStore.getParamsByFamily('Calibration'));
+
 socketUtil.listen('paramUpdated', function(data) {
 	if(data.deviceName === 'Core') return;
 	AppActions.updateParam(data.data);

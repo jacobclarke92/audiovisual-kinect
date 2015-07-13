@@ -67,6 +67,7 @@ export default class Renderer {
   		ParamStore.addEffectParams(currentEffectParams);
 
 		socketUtil.send('effectParams', ParamStore.getEffectParams(currentEffectName));
+		socketUtil.send('filterParams', ParamStore.getParamsByFamily('Filter'));
 
 	}
 

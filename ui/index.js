@@ -26,7 +26,21 @@ socketUtil.listen('effectParams', function(data) {
 	if(data.deviceName !== 'Core') return;
 	console.log('received effect params from Core:', data.data);
 
-	ParamStore.loadNewEffectParams(data.data);
+	ParamStore.loadFamilyOfParams('Effect', data.data);
+});
+
+socketUtil.listen('filterParams', function(data) {
+	if(data.deviceName !== 'Core') return;
+	console.log('received filter params from Core:', data.data);
+
+	ParamStore.loadFamilyOfParams('Filter', data.data);
+});
+
+socketUtil.listen('calibrationParams', function(data) {
+	if(data.deviceName !== 'Core') return;
+	console.log('received calibration params from Core:', data.data);
+
+	ParamStore.loadFamilyOfParams('Calibration', data.data);
 });
 
 socketUtil.listen('effectList', function(data) {
@@ -38,3 +52,4 @@ socketUtil.listen('effectList', function(data) {
 
 socketUtil.request('effectList');
 socketUtil.request('effectParams');
+socketUtil.request('filterParams');

@@ -111,3 +111,4 @@ const ParamStore = StoreUtils.createStore({
 });
 
 export default ParamStore;
+window.params = ParamStore;
