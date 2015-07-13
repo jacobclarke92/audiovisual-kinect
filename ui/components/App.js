@@ -2,6 +2,7 @@ import React from 'react';
 import ReactTabs from 'react-tabs';
 
 import ParamStore from '../stores/Params';
+import EffectStore from '../stores/Effects';
 import AppActions from '../actions/AppActions';
 import connectToStores from '../utils/connectToStores';
 
@@ -22,10 +23,12 @@ function getState(props) {
 	const filterParams = ParamStore.getParamsByFamily('Filter');
 	const calibrationParams = ParamStore.getParamsByFamily('Calibration');
 
-	return {effectParams, filterParams, calibrationParams};
+	const effects = EffectStore.get();
+
+	return {effectParams, filterParams, calibrationParams, effects};
 }
 
-const stores = [ParamStore];
+const stores = [ParamStore, EffectStore];
 @connectToStores(stores, getState)
 export default class App extends React.Component {
 
@@ -41,7 +44,7 @@ export default class App extends React.Component {
 						<Tab>Calibration Params</Tab>
 					</TabList>
 					<TabPanel title='Effect List'>
-						<EffectList />
+						<EffectList items={this.props.effects} />
 					</TabPanel>
 					<TabPanel title='Effect Params'>
 						<SlidersGroup items={this.props.effectParams} />

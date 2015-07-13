@@ -31,6 +31,12 @@ socketUtil.listen('paramUpdated', function(data) {
 	AppActions.updateParam(data.data);
 });
 
+socketUtil.listen('effectChanged', function(data) {
+	if(data.deviceName === 'Core') return;
+	console.'Effect change request received';
+	loadEffect(data.data);
+});
+
 
 // Init kinect image stream
 let imageStreamURL = 'http://localhost:3000/images';

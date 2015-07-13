@@ -13,6 +13,19 @@ export default {
 			value
 		});
 		socketUtil.send('paramUpdated', param.toJS());
+	},
+	effectChanged: function(effectName) {
+		AppDispatcher.dispatch({
+			type: AppConstants.EFFECT_CHANGED,
+			effectName
+		});
+		socketUtil.send('effectChanged', effectName);
+	},
+	effectListReceived: function(list) {
+		AppDispatcher.dispatch({
+			type: AppConstants.EFFECT_LIST_RECEIVED,
+			list
+		});
 	}
 }
 

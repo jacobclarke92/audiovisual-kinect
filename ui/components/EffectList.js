@@ -1,34 +1,18 @@
 import React from 'react';
+import Slider from './Slider';
+import AppActions from '../actions/AppActions';
 
-let ComponentSlider = React.createClass({
+export default class EffectList {
 
-	getInitialState: function() {
-		return null;
-	},
-
-	componentWillMount: function() {
-		
-	},
-
-	componentDidMount: function() {
-
-	},
-
-	componentWillUnmount: function() {
-
-	},
-
-	render: function() {
-		return (
-			<ul>
-				<li>Effect 1</li>
-				<li>Effect 2</li>
-				<li>Effect 3</li>
-				<li>Effect 4</li>
-			</ul>
-		);
+	itemClick(item, event) {
+		AppActions.effectChanged(item);
 	}
 
-});
+	render() {
+		const items = this.props.items.map(item => (
+			<li onClick={this.itemClick.bind(this, item)}>{item}</li>
+		));
+		return <ul>{items}</ul>;
+	}
 
-module.exports = ComponentSlider;
+}
