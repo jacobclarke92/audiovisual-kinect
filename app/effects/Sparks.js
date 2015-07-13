@@ -4,7 +4,6 @@ import * as Dimensions from '../constants/Dimensions';
 import * as PixelUtil from '../utils/PixelUtil';
 import * as EffectUtil from '../utils/EffectUtil';
 import * as NumberUtils from '../utils/NumberUtils';
-import * as ParamStore from '../stores/Params'
 import * as PaletteStore from '../stores/Palettes';
 
 
@@ -19,14 +18,6 @@ export default class Circles1 {
 				min: 0.1,
 				max: 50,
 				step: 0.5,
-			},
-			{
-				name: 'anotherParam',
-				label: 'Another Parameter',
-				value: 50,
-				min: 1,
-				max: 100,
-				step: 1,
 			}
 		];
 	}
@@ -36,6 +27,7 @@ export default class Circles1 {
 			outline: false,
 			audio: false,
 			kinect: true,
+			palette: true
 		};
 	}
 
@@ -51,9 +43,12 @@ export default class Circles1 {
 
 	render() {
 
+		// this.params = {lineThickness: 0.5};
+
 		for(let i = 0; i < NumberUtils.randRound([0,2]); i ++) {
 
 			const particle = new Particle();
+			particle.params = this.params;
 			particle.init();
 			this.container.addChild(particle.shape);
 			this.particles.push(particle);
@@ -72,8 +67,6 @@ export default class Circles1 {
 class Particle {
 
 	init() {
-
-		this.lineThickness = 0.4;
 
 		this.shape = new PIXI.Graphics();
 
@@ -99,12 +92,8 @@ class Particle {
 	}
 
 	draw() {
-		const newVar = ParamStore.getEffectParamValue('lineThickness', 'Sparks');
-		// if(newVar != this.lineThickness) console.log(newVar, this.lineThickness);
-		this.lineThickness = ParamStore.getEffectParamValue('lineThickness', 'Sparks');
-
 		this.shape.clear();
-		this.shape.lineStyle(this.lineThickness, PaletteStore.getRandomColor(), 1);
+		this.shape.lineStyle(this.params.lineThickness, PaletteStore.getRandomColor(), 1);
 		// this.shape.lineStyle(this.lineThickness, this.col, 1);
 
 		this.life --;

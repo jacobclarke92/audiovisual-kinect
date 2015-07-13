@@ -1,5 +1,13 @@
 import $ from 'jquery';
 import PIXI from 'pixi.js/bin/pixi';
+import AppDispatcher from '../AppDispatcher';
+import SocketUtil from '../utils/SocketUtil';
+import EffectStore from '../stores/Effects';
+import ParamStore from '../stores/Params';
+
+let socketUtil = new SocketUtil();
+let currentEffectName = null;
+let currentEffect = null;
 
 export default class Renderer {
 
@@ -32,41 +40,38 @@ export default class Renderer {
 
 	}
 
-	renderFrame(pixiContainer) {
-		this.renderer.render(pixiContainer);
+	renderFrame() {
+
+		currentEffect.params = ParamStore.getEffectParamValues(currentEffectName);
+		currentEffect.render();
+		this.renderer.render(currentEffect.stage);
+
 	}
 
-	drawBounds() {
+	changeEffect(effectName) {
 
-		// Depth image
-		let base = new PIXI.BaseTexture(document.getElementById('testImage'));
-		let texture = new PIXI.Texture(base, new PIXI.Rectangle(0, 0, 320, 240));
-		let sprite = new PIXI.Sprite(texture);
-		sprite.alpha = 1;
-		sprite.x = drawBounds.startX;
-		sprite.y = drawBounds.startY;
-		sprite.scale.x = drawBounds.sizeRatio;
-		sprite.scale.y = drawBounds.sizeRatio;
-		this.stage.addChild(sprite);
+		if(currentEffect) currentEffect.didUnmount();
 
-		let graphics = new PIXI.Graphics();
-		graphics.lineStyle(4, 0xFFFFFF, 1);
+  		currentEffectName = effectName;
+  		currentEffect = EffectStore.get(currentEffectName);
+  		currentEffect.stage = new PIXI.Container();
 
-		// X
-		graphics.moveTo(0,0)
-		graphics.lineTo(drawBounds.width, drawBounds.height);
-		graphics.moveTo(drawBounds.width, 0);
-		graphics.lineTo(0, drawBounds.height);
+  		currentEffect.didMount();
 
-		// Bounds
-		graphics.moveTo(drawBounds.startX, drawBounds.startY);
-		graphics.lineTo(drawBounds.endX, drawBounds.startY);
-		graphics.lineTo(drawBounds.endX, drawBounds.endY);
-		graphics.lineTo(drawBounds.startX, drawBounds.endY);
-		graphics.lineTo(drawBounds.startX, drawBounds.startY);
 
-		this.stage.addChild(graphics);
+  		let currentEffectParams = currentEffect.getParamDefaults();
+		for(let i in currentEffectParams) {
+			currentEffectParams[i].family = 'Effect';
+			currentEffectParams[i].effectName = currentEffectName;
+		}
+  		ParamStore.addEffectParams(currentEffectParams);
 
+		socketUtil.send('effectParams', ParamStore.getEffectParams(currentEffectName));
+
+	}
+
+	getCurrentEffectRequirements() {
+		return currentEffect.getEffectRequirements();
 	}
 
 }

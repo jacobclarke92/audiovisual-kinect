@@ -13,7 +13,7 @@ var colors = require('colors/safe');
 
 
 var verbose = true;
-var portNum = 3000;
+var portNum = 5600;
 var clients = [];
 
 var urlRules = [

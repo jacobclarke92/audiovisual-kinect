@@ -19,11 +19,10 @@ import ParamStore from './stores/Params';
 console.log('████████ STARTING APP █████████');
 
 // Emit Socket.IO greeting
-
 let socketUtil = new SocketUtil();
 socketUtil.send('deviceActive', null);
 
-let effectList = EffectStore.getEffectList();
+let effectList = EffectStore.getList();
 socketUtil.listenAndReturn('effectList', {effectList});
 socketUtil.send('effectList', {effectList});
 
@@ -34,7 +33,6 @@ socketUtil.listen('paramUpdated', function(data) {
 
 
 // Init kinect image stream
-
 let imageStreamURL = 'http://localhost:3000/images';
 let kinectStream = new KinectStream(imageStreamURL);
 kinectStream.start();
@@ -43,31 +41,23 @@ let currentImage = kinectStream.getImage(); // may be null but doesn't matter
 
 
 // Init audio stream
-
 let audioStream = new AudioStream();
 
 
 // Animation controls
-
 let animating = false;
 function processFrame() {
 
 	let newImage = kinectStream.getImage();
-	// Only update currentImage if it is in fact a new image
 	if (currentImage !== newImage) {
 		currentImage = newImage;
 		PixelUtil.updatePixels(currentImage);
 		document.getElementById('testImage').src = currentImage.src;
 	}
 
-	if(currentEffectRequirements && currentEffectRequirements.audio) {
-		// console.log(audioStream.getVolume());
-		audioStream.process();
-	}
+	if(currentEffectRequirements && currentEffectRequirements.audio) audioStream.process();
 	
-	// Process current effect code and send to renderer
-	EffectStore.renderCurrentEffect();
-	renderer.renderFrame(EffectStore.getCurrentEffectStage());
+	renderer.renderFrame();
 
 	if(animating) requestAnimationFrame(() => processFrame());
 }
@@ -82,29 +72,23 @@ function stopRendering() {
 
 
 // Init renderer
-
 const rendererDomElement = document.getElementById('stage')
 const renderer = new Renderer(rendererDomElement, window.innerWidth, window.innerHeight);
 renderer.init();
 
 
 // Get effects list
-
 let currentEffectRequirements = null;
-
 function loadEffect(effectName) {
 
-	AppActions.changeEffect({effectName});
-	
-	currentEffectRequirements = EffectStore.getCurrentEffectRequirements();
+	renderer.changeEffect(effectName);
+	currentEffectRequirements = renderer.getCurrentEffectRequirements();
 
 	if(currentEffectRequirements.kinect) kinectStream.start();
 	else kinectStream.stop();
 
 	if(currentEffectRequirements.audio) audioStream.start();
 	else audioStream.stop();
-
-	socketUtil.send('effectParams', EffectStore.getCurrentEffectParams());
 
 }
 
@@ -124,7 +108,7 @@ function windowResized() {
 
 function startEverything() {
 	windowResized();
-	loadEffect('Sparks');
+	loadEffect('Rain');
 	startRendering();
 }
 

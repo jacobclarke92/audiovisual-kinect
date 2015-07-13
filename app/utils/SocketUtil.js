@@ -1,5 +1,5 @@
 import SocketIO from 'socket.io-client';
-let socket = SocketIO.connect('http://localhost:3000/');
+let socket = SocketIO.connect('http://localhost:5600/');
 
 const defaultDevice = 'Core';
 

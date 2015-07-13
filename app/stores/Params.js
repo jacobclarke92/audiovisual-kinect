@@ -59,6 +59,16 @@ const ParamStore = StoreUtils.createStore({
     });
   },
 
+  getEffectParamValues(effectName) {
+    let paramValues = {};
+    params.forEach(function(obj) {
+      if(obj.get('family') === 'Effect' && obj.get('effectName') === effectName) {
+        paramValues[obj.get('name')] = obj.get('value');
+      }
+    });
+    return paramValues;
+  },
+
   getEffectParamValue(paramName, effectName) {
     const index = params.findIndex(function(obj) {
       return (obj.get('name') === paramName && obj.get('family') === 'Effect' && obj.get('effectName') === effectName);

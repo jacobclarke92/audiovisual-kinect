@@ -13,15 +13,39 @@ export default class Circles1 {
 				name: 'lineThickness',
 				label: 'Line Thickness (px)',
 				value: 2,
-				min: 1,
+				min: 0.1,
 				max: 50,
 				step: 0.5,
 			},
 			{
-				name: 'anotherParam',
-				label: 'Another Parameter',
-				value: 50,
+				name: 'gravity',
+				label: 'Gravity',
+				value: 5,
 				min: 1,
+				max: 10,
+				step: 0.2,
+			},
+			{
+				name: 'wind',
+				label: 'Wind',
+				value: 0,
+				min: -10,
+				max: 10,
+				step: 0.5,
+			},
+			{
+				name: 'windVariation',
+				label: 'Wind Variation',
+				value: 0.5,
+				min: 0,
+				max: 5,
+				step: 0.1,
+			},
+			{
+				name: 'lineLength',
+				label: 'Line Length',
+				value: 20,
+				min: 5,
 				max: 100,
 				step: 1,
 			}
@@ -51,12 +75,14 @@ export default class Circles1 {
 		for(let i = 0; i < 5; i ++) {
 
 			let droplet = new Droplet();
+			droplet.params = this.params;
 			droplet.init();
 			this.container.addChild(droplet.shape);
 			this.droplets.push(droplet);
 		}
 
 		for(let i=0; i<this.droplets.length; i ++) {
+			this.droplets[i].params = this.params;
 			this.droplets[i].draw();
 			if(this.droplets[i].dead) {
 				this.container.removeChild(this.droplets[i].shape);
@@ -70,26 +96,26 @@ class Droplet {
 
 	init() {
 
-		this.windOffset = NumberUtils.rand([-1, 1]);
+		this.windOffset = NumberUtils.rand([-this.params.windVariation, this.params.windVariation]);
 		this.moveX = NumberUtils.randRound(Dimensions.KINECT_WIDTH + this.windOffset*2) - this.windOffset*2;
 		this.lastX = this.moveX;
 		this.moveY = this.lastY = 0;
 		this.life = 0;
 		this.dead = false;
 		this.splash = false;
-		this.gravity = 5 + NumberUtils.rand([0.8, 1.2]);
+		this.gravity = this.params.gravity + NumberUtils.rand([0.8, 1.2]);
 
 		this.shape = new PIXI.Graphics();
-		this.shape.lineStyle(1, PaletteStore.getRandomColor(), 1);
+		this.shape.lineStyle(this.params.lineThickness, PaletteStore.getRandomColor(), 1);
 		this.shape.moveTo(0,0);
-		this.shape.lineTo(0, -50);
+		this.shape.lineTo(0, -this.params.lineLength);
 
 	}
 
 	changeToSplash() {
 
 		this.shape.clear();
-		this.shape.lineStyle(1, PaletteStore.getRandomColor(), 1);
+		this.shape.lineStyle(this.params.lineThickness, PaletteStore.getRandomColor(), 1);
 		this.shape.moveTo(0,0);
 		this.shape.lineTo(0, -10);
 		this.shape.moveTo(0,0);
@@ -120,8 +146,8 @@ class Droplet {
 
 		}else{
 
-			this.moveX += this.windOffset;
-			this.moveY += 10;//= this.gravity + (this.moveY/Dimensions.KINECT_HEIGHT)*this.gravity;
+			this.moveX += this.params.wind + this.windOffset;
+			this.moveY += this.gravity;
 
 			this.shape.rotation = Math.atan2( this.moveY - this.lastY, this.moveX - this.lastX ) - Math.PI/2;
 
