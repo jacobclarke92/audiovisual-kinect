@@ -43,8 +43,6 @@ export default class Circles1 {
 
 	render() {
 
-		// this.params = {lineThickness: 0.5};
-
 		for(let i = 0; i < NumberUtils.randRound([0,2]); i ++) {
 
 			const particle = new Particle();

@@ -30,8 +30,9 @@ AppDispatcher.register(function(payload) {
   switch(payload.type) {
 
   	case ActionTypes.PARAM_VALUE_UPDATED:
+
   		const index = params.findIndex(function(obj) {
-  			return (obj.get('name') === payload.data.name && obj.get('family') === payload.data.family);
+  			return (obj.get('name') === payload.data.name && obj.get('family') === payload.data.family && obj.get('effectName') === payload.data.effectName);
   		});
   		params = params.setIn([index, 'value'], payload.data.value);
   		break;
