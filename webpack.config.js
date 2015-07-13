@@ -22,6 +22,10 @@ module.exports = {
           stage: 0
         },
         exclude: /(node_modules|bower_components)/
+      },
+      {
+        test: /\.glsl$/,
+        loader: 'webpack-glsl'
       }
     ]
   }
