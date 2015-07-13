@@ -15,6 +15,7 @@ export default class Filters {
 		this.twistFilter 			= new PIXI.filters.TwistFilter();
 		this.glowFilter				= new ExtraFilters.GlowFilter(renderer.width, renderer.height, 15, 100, 0, 0xFFFFFF, 0.1);
 		this.outlineFilter 			= new ExtraFilters.OutlineFilter(renderer.width, renderer.height, 5, 0xFFFFFF);
+		this.tiltshiftFilter 		= new PIXI.filters.TiltShiftFilter();
 
 		console.log("******");
 		console.log(this.glowFilter);
@@ -47,7 +48,10 @@ export default class Filters {
 		this.glowFilter.distance = glow;		
 
 		const outline = ParamStore.getParamValue('Filter', 'outline');
-		this.outlineFilter.thickness = outline;	
+		this.outlineFilter.thickness = outline;
+
+		const tiltshift = ParamStore.getParamValue('Filter', 'tiltshift');
+		this.tiltshiftFilter.blur = tiltshift;
 
 		this.filters = [];
 		if(rgbSplit !== 0) 	this.filters.push(this.rgbSplitFilter);
@@ -56,6 +60,7 @@ export default class Filters {
 		if(pixelate !== 0) 	this.filters.push(this.pixelateFilter);
 		if(glow 	!== 0) 	this.filters.push(this.glowFilter);
 		if(outline 	!== 0)	this.filters.push(this.outlineFilter);
+		if(tiltshift!== 0)	this.filters.push(this.tiltshiftFilter);
 	}
 
 	get() {

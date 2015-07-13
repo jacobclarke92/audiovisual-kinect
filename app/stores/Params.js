@@ -13,6 +13,7 @@ let params = Immutable.fromJS([
   {family: 'Filter', name: 'blur', label: 'Blur', value: 0, min: 0, max: 30, step: 0.5},
   {family: 'Filter', name: 'glow', label: 'Glow', value: 0, min: 0, max: 10, step: 0.2},
   {family: 'Filter', name: 'outline', label: 'Outline', value: 0, min: 0, max: 20, step: 0.5},
+  {family: 'Filter', name: 'tiltshift', label: 'Tilt-Shift', value: 0, min: 0, max: 100, step: 0.5},
   
   {family: 'Calibration', name: 'minRange', label: 'Minimum Depth', value: 50, min: 0, max: 110, step: 1},
   {family: 'Calibration', name: 'maxRange', label: 'Maximum Depth', value: 50, min: 0, max: 120, step: 1},
