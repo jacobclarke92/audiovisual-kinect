@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import PIXI from 'pixi.js/bin/pixi';
+import Filters from './Filters';
 import AppDispatcher from '../AppDispatcher';
 import SocketUtil from '../utils/SocketUtil';
 import EffectStore from '../stores/Effects';
@@ -29,6 +30,7 @@ export default class Renderer {
 		});
 		this.renderer.view.className = 'pixi-canvas';
 		this.domContainer.appendChild(this.renderer.view);
+		this.filters = new Filters(this.renderer);
 		
 	}
 
@@ -44,6 +46,9 @@ export default class Renderer {
 
 		currentEffect.params = ParamStore.getEffectParamValues(currentEffectName);
 		currentEffect.render();
+
+		this.filters.update();
+		currentEffect.stage.filters = this.filters.get();
 		this.renderer.render(currentEffect.stage);
 
 	}
