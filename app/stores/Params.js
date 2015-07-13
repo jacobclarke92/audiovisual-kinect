@@ -9,7 +9,7 @@ let params = Immutable.fromJS([
   {family: 'Filter', name: 'displacement', label: 'Displacement', value: 0, min: 0, max: 1000, step: 10},
   {family: 'Filter', name: 'pixelate', label: 'Pixelate', value: 0, min: 0, max: 100, step: 1},
   {family: 'Filter', name: 'twist', label: 'Twist', value: 0, min: 0, max: 15, step: 0.1},
-  {family: 'Filter', name: 'invert', label: 'Invert', value: 0, min: -2.5, max: 2.5, step: 0.05},
+  {family: 'Filter', name: 'invert', label: 'Invert', value: 0, min: -1, max: 2, step: 0.05},
   {family: 'Filter', name: 'blur', label: 'Blur', value: 0, min: 0, max: 30, step: 0.5},
   {family: 'Filter', name: 'glow', label: 'Glow', value: 0, min: 0, max: 10, step: 0.2},
   {family: 'Filter', name: 'outline', label: 'Outline', value: 0, min: 0, max: 20, step: 0.5},
