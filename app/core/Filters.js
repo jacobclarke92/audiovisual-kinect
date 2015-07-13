@@ -15,6 +15,7 @@ export default class Filters {
 		this.twistFilter 			= new PIXI.filters.TwistFilter();
 		this.glowFilter				= new ExtraFilters.GlowFilter(renderer.width, renderer.height, 15, 100, 0, 0xFFFFFF, 0.1);
 		this.outlineFilter 			= new ExtraFilters.OutlineFilter(renderer.width, renderer.height, 5, 0xFFFFFF);
+		this.kaleidoscopeFilter		= new ExtraFilters.KaleidoscopeFilter();
 		this.tiltshiftFilter 		= new PIXI.filters.TiltShiftFilter();
 
 		console.log("******");
