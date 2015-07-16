@@ -4,7 +4,7 @@
   "description": "Visualisation webapp for streamed kinect depth data",
   "main": "index.js",
   "scripts": {
-    "dev": "./launcher | ./server.js && webpack --watch",
+    "dev": "parallelshell \"./launcher | ./server.js\" \"webpack --watch\"",
     "start": "./launcher | ./server.js"
   },
   "repository": {
@@ -40,6 +40,7 @@
     "node-persist": "0.0.4",
     "numbers": "^0.6.0",
     "object-assign": "^3.0.0",
+    "parallelshell": "^1.2.0",
     "pixi.js": "^3.0.6",
     "point-geometry": "0.0.0",
     "react": "^0.13.3",
