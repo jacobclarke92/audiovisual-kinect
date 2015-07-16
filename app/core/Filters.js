@@ -57,6 +57,11 @@ export default class Filters {
 		const invert = ParamStore.getParamValue('Filter', 'invert');
 		this.invertFilter.invert = invert;
 
+		const kaleidoscopeSides = ParamStore.getParamValue('Filter', 'kaleidoscopeSides');
+		const kaleidoscopeAngle = ParamStore.getParamValue('Filter', 'kaleidoscopeAngle');
+		this.kaleidoscopeFilter.sides = kaleidoscopeSides;
+		this.kaleidoscopeFilter.angle = kaleidoscopeAngle;
+
 		this.filters = [];
 		if(rgbSplit !== 0) 	this.filters.push(this.rgbSplitFilter);
 		if(twist 	!== 0) 	this.filters.push(this.twistFilter);
@@ -65,7 +70,8 @@ export default class Filters {
 		if(glow 	!== 0) 	this.filters.push(this.glowFilter);
 		if(outline 	!== 0)	this.filters.push(this.outlineFilter);
 		if(tiltshift!== 0)	this.filters.push(this.tiltshiftFilter);
-		if(invert!== 0)		this.filters.push(this.invertFilter);
+		if(invert 	!== 0)	this.filters.push(this.invertFilter);
+		if(kaleidoscopeSides !== 0)	this.filters.push(this.kaleidoscopeFilter);
 	}
 
 	get() {
