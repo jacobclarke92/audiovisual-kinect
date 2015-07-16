@@ -53,3 +53,4 @@ socketUtil.listen('effectList', function(data) {
 socketUtil.request('effectList');
 socketUtil.request('effectParams');
 socketUtil.request('filterParams');
+socketUtil.request('calibrationParams');
