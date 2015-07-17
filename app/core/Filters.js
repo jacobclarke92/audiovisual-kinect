@@ -7,7 +7,9 @@ console.log(ExtraFilters);
 export default class Filters {
 
 	constructor(renderer) {
-		// this.displacementFilter 	= new PIXI.filters.DisplacementFilter(displacementTexture);
+		
+		this.displacementTexture 	= PIXI.Sprite.fromImage("/webroot/img/displacement/001.jpg");
+
 		this.blurFilter 			= new PIXI.filters.BlurFilter();
 		this.pixelateFilter 		= new PIXI.filters.PixelateFilter();
 		this.invertFilter 			= new PIXI.filters.InvertFilter();
@@ -17,6 +19,7 @@ export default class Filters {
 		this.outlineFilter 			= new ExtraFilters.OutlineFilter(renderer.width, renderer.height, 5, 0xFFFFFF);
 		this.kaleidoscopeFilter		= new ExtraFilters.KaleidoscopeFilter();
 		this.tiltshiftFilter 		= new PIXI.filters.TiltShiftFilter();
+		this.displacementFilter 	= new PIXI.filters.DisplacementFilter(this.displacementTexture);
 
 		console.log("******");
 		console.log(this.glowFilter);
@@ -57,6 +60,9 @@ export default class Filters {
 		const invert = ParamStore.getParamValue('Filter', 'invert');
 		this.invertFilter.invert = invert;
 
+		const displacement = ParamStore.getParamValue('Filter', 'displacement');
+		this.displacementFilter.scale.x = this.displacementFilter.scale.y = displacement;
+
 		const kaleidoscopeSides = ParamStore.getParamValue('Filter', 'kaleidoscopeSides');
 		const kaleidoscopeAngle = ParamStore.getParamValue('Filter', 'kaleidoscopeAngle');
 		this.kaleidoscopeFilter.sides = kaleidoscopeSides;
@@ -71,6 +77,7 @@ export default class Filters {
 		if(outline 	!== 0)	this.filters.push(this.outlineFilter);
 		if(tiltshift!== 0)	this.filters.push(this.tiltshiftFilter);
 		if(invert 	!== 0)	this.filters.push(this.invertFilter);
+		if(displacement 	 !== 0)	this.filters.push(this.displacementFilter);
 		if(kaleidoscopeSides !== 0)	this.filters.push(this.kaleidoscopeFilter);
 	}
 
