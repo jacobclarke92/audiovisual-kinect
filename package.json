@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "parallelshell \"./launcher | ./server.js\" \"webpack --watch\"",
+    "redux": "./launcher | ./server_redux.js",
     "start": "./launcher | ./server.js"
   },
   "repository": {
@@ -44,13 +45,20 @@
     "pixi.js": "^3.0.6",
     "point-geometry": "0.0.0",
     "react": "^0.13.3",
+    "react-hot-loader": "^1.2.7",
     "react-pure-render": "^1.0.2",
+    "react-redux": "^0.2.1",
     "react-tabs": "^0.2.1",
+    "redux": "^1.0.0-rc",
+    "redux-devtools": "^0.1.1",
+    "redux-thunk": "^0.1.0",
+    "reselect": "0.0.1",
     "socket.io": "^1.3.5",
     "socket.io-client": "^1.3.5",
     "three": "^0.71.0",
     "watch": "^0.16.0",
     "webpack": "^1.9.11",
+    "webpack-dev-server": "^1.9.0",
     "webpack-glsl-loader": "^1.0.1",
     "websocket-stream": "^1.5.0"
   }
