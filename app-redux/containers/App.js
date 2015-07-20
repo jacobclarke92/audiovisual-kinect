@@ -4,7 +4,10 @@ import { devTools, persistState } from 'redux-devtools';
 import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
-import * as reducers from './reducers';
+import * as reducers from '../reducers';
+import CoreApp from './CoreApp';
+
+import { viewportUpdate } from '../actions/ViewportActions';
 
 const finalCreateStore = compose(
   applyMiddleware(thunk),
@@ -17,15 +20,18 @@ const reducer = combineReducers(reducers);
 const store = finalCreateStore(reducer);
 
 export default class App extends Component {
+
   render() {
     return (
       <div>
-        <i>Hello</i>
+        <Provider store={store}>
+          {() => <CoreApp />}
+        </Provider>
         <DebugPanel top right bottom>
-          <DevTools store={store}
-                    monitor={LogMonitor} />
+          <DevTools store={store} monitor={LogMonitor} />
         </DebugPanel>
       </div>
     );
   }
+
 }

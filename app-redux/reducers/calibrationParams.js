@@ -1,5 +1,4 @@
 import Immutable from 'immutable';
-import { CALIBRATION_ADD } from '../actions/ActionTypes';
 
 const initialState = Immutable.Map({
 	params: [
@@ -12,8 +11,6 @@ const initialState = Immutable.Map({
 
 export function calibrationParams(state = initialState, action = {}) {
 	switch (action.type) {
-		case CALIBRATION_ADD:
-			return state;
 		default:
 			return state;
 	}
