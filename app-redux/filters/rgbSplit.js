@@ -1,4 +1,4 @@
-import PIXI from 'pixi.js';
+import PIXI from 'pixi.js/bin/pixi';
 
 export default class rgbSplit {
 	getParamDefaults() {
@@ -14,6 +14,6 @@ export default class rgbSplit {
 	}
 	constructor() {
 		this.filter = new PIXI.filters.RGBSplitFilter();
-		return filter;
+		return this.filter;
 	}
 }
