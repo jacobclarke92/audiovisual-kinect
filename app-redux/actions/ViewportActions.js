@@ -1,8 +1,9 @@
-import { VIEWPORT_UPDATE } from './ActionTypes';
+import { VIEWPORT_RESIZE } from './ActionTypes';
 
-export function viewportUpdate(size) {
+export function viewportResize(width, height) {
   return {
-    type: VIEWPORT_UPDATE,
-    size
+    type: VIEWPORT_RESIZE,
+    width, 
+    height
   };
 }

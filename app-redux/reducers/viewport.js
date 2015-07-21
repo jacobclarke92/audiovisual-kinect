@@ -1,16 +1,15 @@
-import { Map } from 'immutable';
-import { VIEWPORT_UPDATE } from '../actions/ActionTypes';
+import { VIEWPORT_RESIZE } from '../actions/ActionTypes';
 
-const initialState = Map({
-	width: window.innerWidth,
-	height: window.innerHeight
-});
+const initialState = {
+	width: 640,
+	height: 480
+};
 
 export function viewport(state = initialState, action = {}) {
 	switch (action.type) {
-		case VIEWPORT_UPDATE:
-			console.log(action);
-			return state;
+		case VIEWPORT_RESIZE:
+			const { width, height } = action;
+			return { ...state, width, height };
 		default:
 			return state;
 	}

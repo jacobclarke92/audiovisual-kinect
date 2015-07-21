@@ -2,35 +2,20 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as ViewportActions from '../actions/ViewportActions';
+import { rangeCalibrationParams, rangeDepthCalibrationParams } from '../selectors/calibrationParams';
 
 @connect(state => ({
-  viewport: state.viewport
+  viewport: state.viewport,
+  calibration: rangeDepthCalibrationParams(state)
 }))
 export default class CoreApp extends Component {
 
   render() {
     return (
       <div>
-      	<i>hi!</i> {this.props.viewport.get('width')} x {this.props.viewport.get('height')}
+      	<i>hi! {this.props.calibration.size}</i> {this.props.viewport.width} x {this.props.viewport.height}
       </div>
     );
-  }
-
-
-  handleResize(e) {
-    console.log(this.props, window.innerWidth, window.innerHeight);
-	this.props.viewport(ViewportActions.viewportUpdate({
-      width: window.innerWidth, 
-      height: window.innerHeight
-    }));
-  }
-
-  componentDidMount() {
-    window.addEventListener('resize', this.handleResize);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResize);
   }
 
 }

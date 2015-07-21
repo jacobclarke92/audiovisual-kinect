@@ -1,6 +1,6 @@
 import Immutable from 'immutable';
 
-const initialState = Immutable.Map({
+const initialState = Immutable.fromJS({
 	params: [
 		{type: 'range', name: 'minRange', label: 'Minimum Depth', value: 50, min: 0, max: 110, step: 1},
 		{type: 'range', name: 'maxRange', label: 'Maximum Depth', value: 50, min: 0, max: 120, step: 1},

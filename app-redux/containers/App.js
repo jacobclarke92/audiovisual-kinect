@@ -6,8 +6,7 @@ import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import * as reducers from '../reducers';
 import CoreApp from './CoreApp';
-
-import { viewportUpdate } from '../actions/ViewportActions';
+import { viewportResize } from '../actions/ViewportActions';
 
 const finalCreateStore = compose(
   applyMiddleware(thunk),
@@ -18,6 +17,9 @@ const finalCreateStore = compose(
 
 const reducer = combineReducers(reducers);
 const store = finalCreateStore(reducer);
+
+window.addEventListener('resize', () => store.dispatch(viewportResize(window.innerWidth, window.innerHeight)));
+store.dispatch(viewportResize(window.innerWidth, window.innerHeight));
 
 export default class App extends Component {
 
