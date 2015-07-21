@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import * as reducers from '../reducers';
 import CoreApp from './CoreApp';
 import { viewportResize } from '../actions/ViewportActions';
+import { effectAdd, effectChange } from '../actions/EffectActions';
 
 const finalCreateStore = compose(
   applyMiddleware(thunk),
@@ -20,6 +21,9 @@ const store = finalCreateStore(reducer);
 
 window.addEventListener('resize', () => store.dispatch(viewportResize(window.innerWidth, window.innerHeight)));
 store.dispatch(viewportResize(window.innerWidth, window.innerHeight));
+
+store.dispatch(effectAdd('fakeEffect'));
+store.dispatch(effectChange('fakeEffect'));
 
 export default class App extends Component {
 
