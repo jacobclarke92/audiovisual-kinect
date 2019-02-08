@@ -17,24 +17,24 @@ const finalCreateStore = compose(
 );
 
 const reducer = combineReducers(reducers);
-const store = finalCreateStore(reducer);
+const redux = finalCreateStore(reducer);
 
-window.addEventListener('resize', () => store.dispatch(viewportResize(window.innerWidth, window.innerHeight)));
-store.dispatch(viewportResize(window.innerWidth, window.innerHeight));
+window.addEventListener('resize', () => redux.dispatch(viewportResize(window.innerWidth, window.innerHeight)));
+redux.dispatch(viewportResize(window.innerWidth, window.innerHeight));
 
-store.dispatch(effectAdd('fakeEffect'));
-store.dispatch(effectChange('fakeEffect'));
+redux.dispatch(effectAdd('fakeEffect'));
+redux.dispatch(effectChange('fakeEffect'));
 
 export default class App extends Component {
 
   render() {
     return (
       <div>
-        <Provider store={store}>
+        <Provider store={redux}>
           {() => <CoreApp />}
         </Provider>
         <DebugPanel top right bottom>
-          <DevTools store={store} monitor={LogMonitor} />
+          <DevTools store={redux} monitor={LogMonitor} />
         </DebugPanel>
       </div>
     );

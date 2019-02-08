@@ -69,10 +69,10 @@ export default class Filters {
 		this.kaleidoscopeFilter.angle = kaleidoscopeAngle;
 
 		this.filters = [];
-		if(rgbSplit !== 0) 	this.filters.push(this.rgbSplitFilter);
 		if(twist 	!== 0) 	this.filters.push(this.twistFilter);
-		if(blur 	!== 0) 	this.filters.push(this.blurFilter);
+		if(rgbSplit !== 0) 	this.filters.push(this.rgbSplitFilter);
 		if(pixelate !== 0) 	this.filters.push(this.pixelateFilter);
+		if(blur 	!== 0) 	this.filters.push(this.blurFilter);
 		if(glow 	!== 0) 	this.filters.push(this.glowFilter);
 		if(outline 	!== 0)	this.filters.push(this.outlineFilter);
 		if(tiltshift!== 0)	this.filters.push(this.tiltshiftFilter);

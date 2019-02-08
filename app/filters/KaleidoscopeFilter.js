@@ -1,7 +1,5 @@
 import Fragment from './KaleidoscopeFilterFragment.glsl';
 
-console.log(Fragment);
-
 function KaleidoscopeFilter() {
 
     PIXI.filters.AbstractFilter.call(this,
